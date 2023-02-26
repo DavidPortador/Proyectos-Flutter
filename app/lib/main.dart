@@ -7,6 +7,7 @@ import 'package:app/screens/login_screen.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'theme_config.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -30,4 +31,11 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
 
