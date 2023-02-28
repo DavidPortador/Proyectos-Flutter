@@ -1,3 +1,4 @@
+import 'package:app/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/loading_model_widget.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
@@ -177,7 +178,78 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Responsive(
+
+
+
+
+
+            mobile:  Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          opacity: 0.7,
+                          image: AssetImage('assets/fondo.jpg'))),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            txtEmail,
+                            space,
+                            txtPass,
+                            space,
+                            btlLogin,
+                            space,
+                            btnGoogle,
+                            space,
+                            // btnFacebook,
+                            // space,
+                            // btnGithub,
+                            // space,
+                            txtRegister
+                          ],
+                        ),
+                        Positioned(top: 60, child: img_logo),
+                      ],
+                    ),
+                  ),
+                ),
+                isLoading ? LoadingModelWidget() : Container()
+              ],
+            ),
+ 
+
+
+
+
+
+
+            desktop: Text('unu'),
+            tablet: Text('owo'),
+            ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+/*
+
+ */
+
+/*
+
+Stack(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -216,6 +288,5 @@ class _LoginScreenState extends State<LoginScreen> {
           isLoading ? LoadingModelWidget() : Container()
         ],
       ),
-    );
-  }
-}
+
+ */
