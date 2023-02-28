@@ -1,10 +1,8 @@
-import 'package:socialtec/widgets/card_planet.dart';
+import 'package:socialtec/screens/onboarding/components/card_planet.dart';
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:socialtec/screens/login/login_screen.dart';
-
-import 'package:socialtec/themes/with_saving_theme.dart';
 
 class OnboardingScreen extends StatelessWidget {
   OnboardingScreen({Key? key}) : super(key: key);
@@ -43,21 +41,24 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ConcentricPageView(
-        colors: data.map((e) => e.backgroundColor).toList(),
-        itemCount: data.length,
-        // Por alguna razon tenía un parámetro que no utiliza
-        //itemBuilder: (int index, double ) {
-        itemBuilder: (int index) {
-          return CardPlanet(data: data[index]);
-        },
-        onFinish: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()),
-            //MaterialPageRoute(builder: (context) => const MyHomePage()),
-          );
-        },
+      // No se esta apliacando el center >:c
+      body: Center(
+        child: ConcentricPageView(
+          colors: data.map((e) => e.backgroundColor).toList(),
+          itemCount: data.length,
+          // Por alguna razon tenía un parámetro que no utiliza
+          //itemBuilder: (int index, double value) {
+          itemBuilder: (int index) {
+            return CardPlanet(data: data[index]);
+          },
+          onFinish: () {
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const LoginScreen()),
+            // );
+            Navigator.pushNamed(context, '/login');
+          },
+        ),
       ),
     );
   }
