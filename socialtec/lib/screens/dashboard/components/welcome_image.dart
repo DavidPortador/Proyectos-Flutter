@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:socialtec/themes/constants.dart';
+const double defaultPadding = 16.0;
 
 class WelcomeImage extends StatelessWidget {
   const WelcomeImage({
     Key? key,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

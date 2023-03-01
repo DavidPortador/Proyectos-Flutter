@@ -3,7 +3,7 @@ import 'package:socialtec/settings/responsive.dart';
 
 import '../../components/background.dart';
 import 'components/login_form.dart';
-import 'components/login_screen_top_image.dart';
+import 'components/login_screen_top.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);

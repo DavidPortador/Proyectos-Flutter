@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../components/background.dart';
-import '../../settings/responsive.dart';
+import 'package:socialtec/components/background.dart';
+import 'package:socialtec/settings/responsive.dart';
+
 import 'components/login_signup_btn.dart';
 import 'components/welcome_image.dart';
 
