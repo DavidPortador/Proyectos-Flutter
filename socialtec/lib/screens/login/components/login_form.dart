@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:socialtec/components/footer_account_acheck.dart';
-
-const double defaultPadding = 16.0;
+import 'package:socialtec/settings/theme_config.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
@@ -126,7 +125,7 @@ class LoginForm extends StatelessWidget {
                       //setState(() {});
                       //Navigator.pushNamed(context, '/theme');
                     //});
-                    Navigator.pushNamed(context, '/theme');
+                    Navigator.pushNamed(context, '/dashboard');
                   } else {
                     showAlertDialog(
                         context, 'Incorrect email', 'Incorrect Email format');

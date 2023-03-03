@@ -1,37 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:socialtec/settings/responsive.dart';
+import 'package:socialtec/components/background.dart';
 
-import '../../components/background.dart';
 import 'components/login_form.dart';
-import 'components/login_screen_top.dart';
+import 'components/login_top.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return const Background(
       child: SingleChildScrollView(
         child: Responsive(
           mobile: MobileLoginScreen(),
-          desktop: Row(
-            children: [
-              Expanded(
-                child: LoginScreenTopImage(),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 450,
-                      child: LoginForm(),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          desktop: DesktopLoginScreen()
         ),
       ),
     );
@@ -58,6 +40,32 @@ class MobileLoginScreen extends StatelessWidget {
             ),
             Spacer(),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class DesktopLoginScreen extends StatelessWidget {
+  const DesktopLoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: LoginScreenTopImage(),
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 450,
+                child: LoginForm(),
+              ),
+            ],
+          ),
         ),
       ],
     );

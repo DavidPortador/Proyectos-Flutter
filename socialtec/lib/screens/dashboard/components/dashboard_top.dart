@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 const double defaultPadding = 16.0;
 
-class WelcomeImage extends StatelessWidget {
-  const WelcomeImage({
+class DashboardTop extends StatelessWidget {
+  const DashboardTop({
     Key? key,
   }) : super(key: key);
 

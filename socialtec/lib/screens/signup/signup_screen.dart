@@ -4,8 +4,6 @@ import 'package:socialtec/components/background.dart';
 import 'components/sign_up_top.dart';
 import 'components/signup_form.dart';
 
-const double defaultPadding = 16.0;
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -72,7 +70,7 @@ class DesktopSingupScreen extends StatelessWidget {
                 width: 450,
                 child: SignUpForm(),
               ),
-              SizedBox(height: defaultPadding / 2),
+              SizedBox(height: 8.0),
               // SocalSignUp()
             ],
           ),

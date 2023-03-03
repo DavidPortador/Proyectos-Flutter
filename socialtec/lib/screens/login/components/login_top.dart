@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-const double defaultPadding = 16.0;
+import 'package:socialtec/settings/theme_config.dart';
 
 class LoginScreenTopImage extends StatelessWidget {
   const LoginScreenTopImage({

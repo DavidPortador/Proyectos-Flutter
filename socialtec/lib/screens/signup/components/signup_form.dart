@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socialtec/components/footer_account_acheck.dart';
-
-const double defaultPadding = 16.0;
+import 'package:socialtec/settings/theme_config.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({

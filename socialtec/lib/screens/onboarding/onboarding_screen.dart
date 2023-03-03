@@ -49,10 +49,6 @@ class OnboardingScreen extends StatelessWidget {
           return CardPlanet(data: data[index]);
         },
         onFinish: () {
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-          // );
           Navigator.pushNamed(context, '/login');
         },
       ),

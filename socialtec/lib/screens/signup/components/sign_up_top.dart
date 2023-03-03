@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
+import 'package:socialtec/settings/theme_config.dart';
 import 'package:image_picker/image_picker.dart';
-
-const double defaultPadding = 16.0;
+import 'dart:io';
 
 class SignUpScreenTopImage extends StatefulWidget {
   const SignUpScreenTopImage({
@@ -28,6 +27,7 @@ class _SignUpScreenTopImageState extends State<SignUpScreenTopImage> {
       });
     }
   }
+
   // Implementing the camera
   Future<void> _openCameraPicker() async {
     final XFile? pickedImage =
@@ -53,31 +53,25 @@ class _SignUpScreenTopImageState extends State<SignUpScreenTopImage> {
               flex: 8,
               child: Column(
                 children: [
-                  Text(
+
+                  const Text(
                     "Sign Up",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   ),
+
                   const SizedBox(height: defaultPadding / 2),
                   Container(
                     alignment: Alignment.center,
                     width: 200,
                     height: 200,
-                    color: Colors.grey[300],
+                    color: Colors.black26,
                     child: _image != null
                         ? Image.file(_image!, fit: BoxFit.cover,)
-                        // ? CircleAvatar(
-                        //     backgroundColor: Colors.red,
-                        //     child: CircleAvatar(
-                        //         backgroundImage: Image.file(
-                        //           _image!,
-                        //           fit: BoxFit.cover,
-                        //         ).image,
-                        //     ),
-                        // )
-                        : const Text(
-                            'Please select an image',
-                            style: TextStyle(color: Colors.black),
-                          ),
+                        : Image.asset('assets/customs/bob_cholo.png', fit: BoxFit.cover,)
+                        // : const Text(
+                        //   'Please select an image',
+                        //   style: TextStyle(color: Colors.black),
+                        // ),
                   ),
                   const SizedBox(height: defaultPadding / 2),
 
