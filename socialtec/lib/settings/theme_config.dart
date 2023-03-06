@@ -84,7 +84,7 @@ ThemeData lightTheme = ThemeData.light().copyWith(
       primary: lightPrimaryColor,
       shape: const StadiumBorder(),
       maximumSize: const Size(double.infinity, 56),
-      minimumSize: const Size(double.infinity, 56),
+      minimumSize: const Size(double.minPositive, 56),
     ),
   ),
   inputDecorationTheme: const InputDecorationTheme(
@@ -119,7 +119,7 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
       primary: darkPrimaryColor,
       shape: const StadiumBorder(),
       maximumSize: const Size(double.infinity, 56),
-      minimumSize: const Size(double.infinity, 56),
+      minimumSize: const Size(double.minPositive, 56),
     ),
   ),
   inputDecorationTheme: const InputDecorationTheme(

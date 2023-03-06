@@ -9,24 +9,27 @@ class DashboardBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Hero(
-          tag: "login_btn",
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/theme');
-            },
-            child: Text(
-              "Login"
-            ),
+        ElevatedButton.icon(
+          icon: Icon(Icons.brightness_6_rounded),
+          onPressed: () {
+            Navigator.pushNamed(context, '/theme');
+          },
+          label: Text(
+            "Themes"
           ),
         ),
         const SizedBox(height: 16),
-        ElevatedButton(
+        ElevatedButton.icon(
+          icon: Icon(Icons.logout),
           onPressed: () {
-            Navigator.pushNamed(context, '/signup');
+            Navigator.pushNamed(context, '/login');
           },
-          child: Text(
-            "Sign Up"
+          label: Text(
+            "Logout"
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.redAccent,
+            //onPrimary: Colors.black,
           ),
         ),
       ],

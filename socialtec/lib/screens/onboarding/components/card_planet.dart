@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CardPlanetData {
   final String title;
   final String subtitle;
-  final ImageProvider image;
+  final Widget? image;
   final Color backgroundColor;
   final Color titleColor;
   final Color subtitleColor;
@@ -12,7 +12,7 @@ class CardPlanetData {
   CardPlanetData({
     required this.title,
     required this.subtitle,
-    required this.image,
+    this.image,
     required this.backgroundColor,
     required this.titleColor,
     required this.subtitleColor,
@@ -42,14 +42,14 @@ class CardPlanet extends StatelessWidget {
               const Spacer(flex: 3),
               Flexible(
                 flex: 20,
-                child: Image(image: data.image),
+                child: data.image!,
               ),
               const Spacer(flex: 1),
               Text(
                 data.title.toUpperCase(),
                 style: TextStyle(
                   color: data.titleColor,
-                  fontSize: 20,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1,
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socialtec/settings/theme_config.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginScreenTopImage extends StatelessWidget {
   const LoginScreenTopImage({
@@ -16,7 +17,10 @@ class LoginScreenTopImage extends StatelessWidget {
             const Spacer(),
             Expanded(
               flex: 8,
-              child: Image.asset("assets/customs/logo.png", height: 275),
+              child: LottieBuilder.asset(
+                "assets/animation/music_5.json",
+                //height: 275,
+              ),
             ),
             const Spacer(),
           ],

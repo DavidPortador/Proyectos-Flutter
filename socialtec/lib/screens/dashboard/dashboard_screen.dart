@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socialtec/settings/responsive.dart';
+import 'package:socialtec/components/background.dart';
 
 import 'components/dashboard_body.dart';
 import 'components/dashboard_top.dart';
@@ -12,25 +13,31 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          children: const [
+          children: [
             UserAccountsDrawerHeader(
               accountName: Text('Bob Cholo'),
               accountEmail: Text('bob_cholo@gmail.com'),
-              // currentAccountPicture: CircleAvatar(
-              //   backgroundImage: AssetImage('assets/customs/bob_cholo.png'),
-              // ),
+              currentAccountPicture: Image(
+                image: AssetImage('assets/customs/bob_cholo.png')
+              ),
             ),
             ListTile(
-              title: Text('Titulo'),
-              subtitle: Text('subtitulo'),
-              leading: Icon(Icons.settings),
+              title: Text('Themes'),
+              subtitle: Text('Change your theme here'),
+              leading: Icon(Icons.brightness_6_rounded),
               trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.pushNamed(context, '/theme');
+              },
             ),
             ListTile(
               title: Text('Titulo 2'),
               subtitle: Text('subtitulo 2'),
               leading: Icon(Icons.settings),
               trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                
+              },
             ),
           ],
         ),
@@ -40,10 +47,13 @@ class DashboardScreen extends StatelessWidget {
           'Dashboard',
         ),
       ),
-      body: const Responsive(
-          desktop: DesktopDashboardScreen(),
-          mobile: MobileDashboardScreen(),
+      body: const Background(
+        child: SingleChildScrollView(
+          child: Responsive(
+              mobile: MobileDashboardScreen(),
+              desktop: DesktopDashboardScreen()),
         ),
+      ),
     );
   }
 }

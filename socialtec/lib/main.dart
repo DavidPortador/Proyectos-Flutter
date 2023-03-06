@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:socialtec/settings/theme_config.dart';
 import 'package:socialtec/settings/routes.dart';
-import 'package:socialtec/screens/onboarding/onboarding_screen.dart';
+//import 'package:socialtec/screens/onboarding/onboarding_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           title: 'S O C I A L T E C',
           theme: myTheme,
           routes: getApplicationRoutes(),
-          home: OnboardingScreen(),
+          //home: OnboardingScreen(),
         );
       },
     );

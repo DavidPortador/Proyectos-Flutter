@@ -1,5 +1,6 @@
 import 'package:socialtec/screens/onboarding/components/card_planet.dart';
 import 'package:concentric_transition/concentric_transition.dart';
+import 'package:socialtec/settings/theme_config.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -8,32 +9,31 @@ class OnboardingScreen extends StatelessWidget {
 
   final data = [
     CardPlanetData(
-      title: "observe",
-      subtitle:
-          "The night sky has much to offer to those who seek its mystery.",
-      image: const AssetImage("assets/images/img-1.png"),
-      backgroundColor: const Color.fromRGBO(0, 10, 56, 1),
-      titleColor: Colors.pink,
+      title: "WELCOME TO SOCIALTEC",
+      subtitle: "The social network to share music witch your friends.",
+      image: LottieBuilder.asset("assets/animation/cute_1.json"),
+      backgroundColor: blueBackgroundColor,
+      titleColor: darkBackgroundColor,
       subtitleColor: Colors.white,
-      background: LottieBuilder.asset("assets/animation/bg-1.json"),
+      background: LottieBuilder.asset("assets/animation/music_3.json"),
     ),
     CardPlanetData(
-      title: "imagine",
+      title: "MUSIC FOR EVERYONE",
       subtitle: "An endless number of galaxies means endless possibilities.",
-      image: const AssetImage("assets/images/img-2.png"),
-      backgroundColor: Colors.white,
-      titleColor: Colors.purple,
-      subtitleColor: const Color.fromRGBO(0, 10, 56, 1),
-      background: LottieBuilder.asset("assets/animation/bg-2.json"),
+      image: LottieBuilder.asset("assets/animation/music_1.json"),
+      backgroundColor: purplePrimaryColor,
+      titleColor: darkBackgroundColor,
+      subtitleColor: Colors.white,
+      background: LottieBuilder.asset("assets/animation/load_1.json"),
     ),
     CardPlanetData(
-      title: "stargaze",
-      subtitle: "The sky dome is a beautiful graveyard of stars.",
-      image: const AssetImage("assets/images/img-3.png"),
-      backgroundColor: const Color.fromRGBO(71, 59, 117, 1),
-      titleColor: Colors.yellow,
-      subtitleColor: Colors.white,
-      background: LottieBuilder.asset("assets/animation/bg-3.json"),
+      title: "LET'S STARTED",
+      subtitle: "Sing in or sign up to share music whith all the world.",
+      image: LottieBuilder.asset("assets/animation/cute_3.json"),
+      backgroundColor: purpleBackgroundColor,
+      titleColor: bluePrimaryColor,
+      subtitleColor: Colors.black,
+      background: LottieBuilder.asset("assets/animation/bg_1.json"),
     ),
   ];
 

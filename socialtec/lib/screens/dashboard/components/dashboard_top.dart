@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
 const double defaultPadding = 16.0;
 
@@ -13,21 +13,21 @@ class DashboardTop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        
         Text(
-          "WELCOME TO EDU",
+          "Welcome to S O C I A L T E C",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: defaultPadding * 2),
+        SizedBox(height: defaultPadding / 2),
         Row(
           children: [
-            Spacer(),
             Expanded(
               flex: 8,
-              child: SvgPicture.asset(
-                "assets/icons/chat.svg",
+              child: LottieBuilder.asset(
+                "assets/animation/cute_2.json",
+                height: 350,
               ),
             ),
-            Spacer(),
           ],
         ),
         SizedBox(height: defaultPadding * 2),

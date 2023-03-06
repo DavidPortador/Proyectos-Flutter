@@ -3,16 +3,16 @@ import 'package:socialtec/screens/dashboard/dashboard_screen.dart';
 import 'package:socialtec/screens/login/login_screen.dart';
 import 'package:socialtec/screens/onboarding/onboarding_screen.dart';
 import 'package:socialtec/screens/signup/signup_screen.dart';
-import 'package:socialtec/screens/theme/saving_theme.dart';
+import 'package:socialtec/screens/theme/theme_screen.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
 
-    '/theme': (BuildContext context) => SavingTheme(),
-    '/dashboard': (BuildContext context) => DashboardScreen(),
+    '/': (BuildContext context) => OnboardingScreen(),
     '/login': (BuildContext context) => LoginScreen(),
-    '/onboarding': (BuildContext context) => OnboardingScreen(),
     '/signup': (BuildContext context) => SignUpScreen(),
+    '/dashboard': (BuildContext context) => DashboardScreen(),
+    '/theme': (BuildContext context) => ThemeScreen(),
 
   };
 }

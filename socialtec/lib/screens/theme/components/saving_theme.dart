@@ -1,5 +1,5 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:socialtec/settings/theme_config.dart';
 
