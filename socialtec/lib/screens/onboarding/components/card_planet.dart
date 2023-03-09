@@ -49,7 +49,7 @@ class CardPlanet extends StatelessWidget {
                 data.title.toUpperCase(),
                 style: TextStyle(
                   color: data.titleColor,
-                  fontSize: 25,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1,
                 ),

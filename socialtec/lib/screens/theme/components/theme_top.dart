@@ -5,16 +5,13 @@ import 'package:socialtec/settings/theme_config.dart';
 
 
 class ThemeTop extends StatefulWidget {
-  const ThemeTop({
-    Key? key,
-  }) : super(key: key);
+  const ThemeTop({super.key});
 
   @override
   State<ThemeTop> createState() => _ThemeTopState();
 }
 
 class _ThemeTopState extends State<ThemeTop> {
-
   @override
   Widget build(BuildContext context) {
     return Column(

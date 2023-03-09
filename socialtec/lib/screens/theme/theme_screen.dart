@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:socialtec/settings/model_theme.dart';
 import 'package:socialtec/settings/responsive.dart';
 import 'package:socialtec/components/background.dart';
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+//import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 
 import 'components/theme_top.dart';
 import 'components/theme_body.dart';
@@ -24,56 +26,57 @@ class _ThemeScreenState extends State<ThemeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ThemeSwitchingArea(
-        child: Scaffold(
-          drawer: Drawer(
-            child: ListView(
-              children: [
-                UserAccountsDrawerHeader(
-                  accountName: Text('Bob Cholo'),
-                  accountEmail: Text('bob_cholo@gmail.com'),
-                  currentAccountPicture: Image(
-                    image: AssetImage('assets/customs/bob_cholo.png')
-                  ),
-                ),
-                ListTile(
-                  title: Text('Themes'),
-                  subtitle: Text('Change your theme here'),
-                  leading: Icon(Icons.brightness_6_rounded),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/theme');
-                  },
-                ),
-                ListTile(
-                  title: Text('Titulo 2'),
-                  subtitle: Text('subtitulo 2'),
-                  leading: Icon(Icons.settings),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {},
-                ),
-              ],
-            ),
+    return Consumer<ModelTheme>(
+      builder: (context, ModelTheme themeNotifier, child) {
+        return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text('Bob Cholo'),
+                accountEmail: Text('bob_cholo@gmail.com'),
+                currentAccountPicture:
+                    Image(image: AssetImage('assets/customs/bob_cholo.png')),
+              ),
+              ListTile(
+                title: Text('Themes'),
+                subtitle: Text('Change your theme here'),
+                leading: Icon(Icons.brightness_6_rounded),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  Navigator.pushNamed(context, '/theme');
+                },
+              ),
+              ListTile(
+                title: Text('Titulo 2'),
+                subtitle: Text('subtitulo 2'),
+                leading: Icon(Icons.settings),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {},
+              ),
+            ],
           ),
-          appBar: AppBar(
-            title: const Text(
-              'Choose Theme',
-            ),
-          ),
-          body: const Background(
-            child: SingleChildScrollView(
-              child: Responsive(
-                  mobile: MobileThemeScreen(), desktop: DesktopThemeScreen()),
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(
-              Icons.add,
+        ),
+        appBar: AppBar(
+          title: Text('Theme'),
+        ),
+        body: Background(
+          child: SingleChildScrollView(
+            child: Responsive(
+              mobile: MobileThemeScreen(),
+              desktop: DesktopThemeScreen()
             ),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: incrementCounter,
+          tooltip: 'Increment',
+          child: const Icon(
+            Icons.add,
+          ),
+        ),
+      );
+      }
     );
   }
 }

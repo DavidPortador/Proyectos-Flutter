@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:socialtec/database/database_helper.dart';
 
-// import '../models/post_model.dart';
+// import 'post_model.dart';
 
 // class ListPost extends StatefulWidget {
 //   const ListPost({super.key});
