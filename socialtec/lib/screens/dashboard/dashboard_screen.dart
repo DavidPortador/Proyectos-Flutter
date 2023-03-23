@@ -27,7 +27,7 @@ class DashboardScreen extends StatelessWidget {
               leading: Icon(Icons.brightness_6_rounded),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.pushNamed(context, '/theme');
+                
               },
             ),
             ListTile(
