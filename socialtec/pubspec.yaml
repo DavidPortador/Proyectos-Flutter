@@ -39,12 +39,14 @@ dependencies:
   flutter_svg: ^2.0.2                 # icons svg
   social_login_buttons: ^1.0.7        # social buttons
   provider: ^6.0.5                    # theme tree
+  path_provider: ^2.0.13              # 
   animated_theme_switcher: ^2.0.7     # animation theme
   shared_preferences: ^2.0.18         # save theme
   image_picker: ^0.8.6+4              # load img
   concentric_transition: ^1.0.3       # onboarding transition
   lottie: ^2.2.0                      # json animations like after effects
-  #sqflite: ^2.2.5                     # sqlite3
+  sqflite: ^2.2.5                     # sqlite
+  http: ^0.13.5                       # API
 
 # Flutter launcher icon
 flutter_icons:

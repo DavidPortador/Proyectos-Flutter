@@ -7,6 +7,11 @@ void main() {
   return runApp(CalendarApp());
 }
 
+final List<Meeting> meetings = <Meeting>[];
+List<Meeting> _getDataSource() {
+  return meetings;
+}
+
 /// The app which hosts the home page which contains the calendar on it.
 class CalendarApp extends StatefulWidget {
   @override
@@ -17,7 +22,7 @@ class _CalendarAppState extends State<CalendarApp> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        title: 'Calendar Demo',
+        title: 'Calendar Events',
         debugShowCheckedModeBanner: false,
         home: MyHomePage());
   }
@@ -37,7 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedDate = DateTime.now().toString();
   final desc = TextEditingController();
   bool ban = false;
-  final List<Meeting> meetings = <Meeting>[];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Icons.brightness_6_rounded),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.pushNamed(context, '/theme');
+                //Navigator.pushNamed(context, '/theme');
               },
             ),
             ListTile(
@@ -73,8 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       appBar: AppBar(
         title: const Text(
-          'Events',
+          'Calendar Events',
         ),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ListScreen()));
+              },
+              icon: Icon(Icons.list_alt_outlined)),
+        ],
       ),
       body: SfCalendar(
         view: CalendarView.month,
@@ -94,16 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await _displayTextInputDialog();
-          setState(() {});
+          setState(() {}); // >:'u
         },
         tooltip: 'Add Event',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
-
-  List<Meeting> _getDataSource() {
-    return meetings;
   }
 
   Future<void> _displayTextInputDialog() async {
@@ -165,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           DateFormat("yyyy-MM-dd").parse(selectedDate);
                       DateTime now = DateFormat("yyyy-MM-dd")
                           .parse(DateTime.now().toString());
-                      Color color = getColor(day, now);
+                      Color color = getColor(day, now, ban);
                       setState(() {
                         // object meet
                         print(desc.text);
@@ -184,14 +192,18 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  Color getColor(DateTime day, DateTime now) {
+  Color getColor(DateTime day, DateTime now, bool ban) {
     Color color = const Color.fromARGB(255, 109, 93, 93);
     if (day.compareTo(now) < 0) {
       // Event before now
-      color = const Color.fromARGB(255, 254, 39, 39);
+      if (ban) {
+        color = const Color.fromARGB(255, 9, 186, 33);
+      } else {
+        color = const Color.fromARGB(255, 254, 39, 39);
+      }
     } else if (day.compareTo(now) == 0) {
       // Event Today
-      color = const Color.fromARGB(255, 10, 161, 20);
+      color = const Color.fromARGB(255, 58, 131, 63);
     } else if (day.compareTo(now) > 0) {
       // Event after now
       final Duration durdef = day.difference(now);
@@ -218,6 +230,120 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedDate = picked.toString();
       });
     }
+  }
+}
+
+class ListScreen extends StatefulWidget {
+  const ListScreen({super.key});
+
+  @override
+  State<ListScreen> createState() => _ListScreenState();
+}
+
+class _ListScreenState extends State<ListScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text('Bob Cholo'),
+              accountEmail: Text('bob_cholo@gmail.com'),
+              // currentAccountPicture: Image(
+              //   image: AssetImage('assets/customs/bob_cholo.png')
+              // ),
+            ),
+            ListTile(
+              title: Text('Themes'),
+              subtitle: Text('Change your theme here'),
+              leading: Icon(Icons.brightness_6_rounded),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                //Navigator.pushNamed(context, '/theme');
+              },
+            ),
+            ListTile(
+              title: Text('Titulo 2'),
+              subtitle: Text('subtitulo 2'),
+              leading: Icon(Icons.settings),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        title: const Text(
+          'List Events',
+        ),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.calendar_month_outlined)),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: _getDataSource().length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            padding: const EdgeInsets.all(30),
+            margin: const EdgeInsets.fromLTRB(30, 15, 30, 15),
+            height: 100,
+            width: double.infinity,
+            color: MeetingDataSource(meetings).getColor(index).withOpacity(0.5),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Event $index: "),
+                  Text(MeetingDataSource(meetings).getSubject(index)),
+                  Expanded(child: Container()),
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text("Event details", textAlign: TextAlign.center, style: TextStyle(color: MeetingDataSource(meetings).getColor(index), fontWeight: FontWeight.bold)),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                  "ID: $index"),
+                              Text(
+                                  "DESC: ${MeetingDataSource(meetings).getSubject(index)}"),
+                              Text(
+                                  "DATE: ${"${MeetingDataSource(meetings).getEndTime(index)}".split(' ')[0]}"),
+                              Text(
+                                  "OVER: ${MeetingDataSource(meetings).isCompleted(index)}"),
+                            ]
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(ctx).pop();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(14),
+                                child: const Text("Close"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.density_medium_rounded)
+                  ),
+                ]
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 

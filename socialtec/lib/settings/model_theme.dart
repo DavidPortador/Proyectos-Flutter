@@ -12,8 +12,6 @@ class ModelTheme extends ChangeNotifier {
      getPreferences();
   }
 
-
-  
   set chooseTheme(int value) {
     _chooseTheme = value;
     _preferences.setTheme(value);
