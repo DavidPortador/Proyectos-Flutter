@@ -6,19 +6,19 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
-  
   static final nameDB = 'SOCIALDB';
   static final versionDB = 1;
 
   static Database? _database;
   Future<Database> get database async {
-    if( _database != null ) return _database!;
+    if (_database != null) return _database!;
     return _database = await _initDatabase();
   }
 
-  _initDatabase() async{
+  _initDatabase() async {
+    print("connection database <-");
     Directory folder = await getApplicationDocumentsDirectory();
-    String pathDB = join(folder.path,nameDB);
+    String pathDB = join(folder.path, nameDB);
     return await openDatabase(
       pathDB,
       version: versionDB,
@@ -26,7 +26,7 @@ class DatabaseHelper {
     );
   }
 
-  _createTables(Database db, int version) async{
+  _createTables(Database db, int version) async {
     String query = '''CREATE TABLE tblPost (
       idPost INTEGER PRIMARY KEY,
       dscPost VARCHAR(200),
@@ -35,29 +35,26 @@ class DatabaseHelper {
     db.execute(query);
   }
 
-  Future<int> INSERT(String tblName, Map<String,dynamic> data) async{
+  Future<int> INSERT(String tblName, Map<String, dynamic> data) async {
     var conexion = await database;
     return conexion.insert(tblName, data);
   }
 
-  Future<int> UPDATE(String tblName,Map<String,dynamic> data) async{
+  Future<int> UPDATE(String tblName, Map<String, dynamic> data) async {
     var conexion = await database;
-    return conexion.update(tblName,data,
-    where: 'idPost = ?',
-    whereArgs:[data['idPost']]);
+    return conexion.update(tblName, data,
+        where: 'idPost = ?', whereArgs: [data['idPost']]);
   }
 
   Future<int> DELETE(String tblName, int idPost) async {
     var conexion = await database;
-    return conexion.delete(tblName,
-      where: 'idPost = ?',
-      whereArgs: [idPost]);
+    return conexion.delete(tblName, where: 'idPost = ?', whereArgs: [idPost]);
   }
 
   Future<List<PostModel>> GETALLPOST() async {
     var conexion = await database;
     var result = await conexion.query('tblPost');
+    print("resultado -> $result");
     return result.map((post) => PostModel.fromMap(post)).toList();
   }
-
 }

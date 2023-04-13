@@ -19,12 +19,40 @@ class DashboardBody extends StatelessWidget {
             label: Text("Themes"),
           ),
           const SizedBox(height: 16),
-                  ElevatedButton.icon(
+          ElevatedButton.icon(
             icon: Icon(Icons.post_add_rounded),
             onPressed: () {
               Navigator.pushNamed(context, '/post');
             },
             label: Text("Posts"),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.green,
+              //onPrimary: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            icon: Icon(Icons.edit_calendar_outlined),
+            onPressed: () {
+              Navigator.pushNamed(context, '/events');
+            },
+            label: Text("Events"),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.orange,
+              //onPrimary: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            icon: Icon(Icons.http_rounded),
+            onPressed: () {
+              Navigator.pushNamed(context, '/popular');
+            },
+            label: Text("API"),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.purple,
+              //onPrimary: Colors.black,
+            ),
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(

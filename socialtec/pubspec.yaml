@@ -47,6 +47,8 @@ dependencies:
   lottie: ^2.2.0                      # json animations like after effects
   sqflite: ^2.2.5                     # sqlite
   http: ^0.13.5                       # API
+  syncfusion_flutter_calendar: ^20.4.54
+  intl: ^0.18.0
 
 # Flutter launcher icon
 flutter_icons:

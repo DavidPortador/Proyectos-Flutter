@@ -1,10 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:socialtec/database/database_helper.dart';
 import 'package:socialtec/models/post_model.dart';
-import 'package:socialtec/provider/flags_provider.dart';
-import 'package:provider/provider.dart';
 
 class ItemPostWidget extends StatelessWidget {
   ItemPostWidget({super.key, this.objPostModel});
@@ -16,17 +12,15 @@ class ItemPostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final avatar = CircleAvatar(
-      backgroundImage: AssetImage('assets/logo_itc.png'),
-    );
+    // final avatar = CircleAvatar(
+    //   backgroundImage: AssetImage('assets/customs/bob_cholo.png'),
+    // );
 
     final txtUser = Text('Rubensin');
     final datePost = Text('06-03-2023');
-    final imgPost = Image(image: AssetImage('assets/logo_itc.png'),height: 100,);
+    // final imgPost = Image(image: AssetImage('assets/customs/bob_cholo.png'),height: 100,);
     final txtDesc = Text(objPostModel!.dscPost!);
     final iconRate = Icon(Icons.rate_review);
-
-    FlagsProvider flag = Provider.of<FlagsProvider>(context);
 
     return Container(
       margin: const EdgeInsets.all(10),
@@ -40,14 +34,14 @@ class ItemPostWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              avatar,
+              // avatar,
               txtUser,
               datePost
             ],
           ),
           Row(
             children: [
-              imgPost,
+              // imgPost,
               txtDesc
             ],
           ),
@@ -72,9 +66,7 @@ class ItemPostWidget extends StatelessWidget {
                       actions: [
                         TextButton(
                           onPressed: (){
-                            database.DELETE('tblPost',objPostModel!.idPost!).then(
-                              (value) => flag.setflagListPost()
-                            );
+                            database.DELETE('tblPost',objPostModel!.idPost!);
                             Navigator.pop(context);
                           }, 
                           child: const Text('Si')

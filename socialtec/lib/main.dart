@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socialtec/settings/theme_config.dart';
 import 'package:socialtec/settings/model_theme.dart';
-import 'package:socialtec/provider/flags_provider.dart';
 import 'package:socialtec/settings/routes.dart';
 import 'package:provider/provider.dart';
 

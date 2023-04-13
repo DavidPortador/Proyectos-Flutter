@@ -3,8 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'dart:async';
 
-void main() {
-  return runApp(CalendarApp());
+class EventsScreen extends StatefulWidget {
+  const EventsScreen({super.key});
+
+  @override
+  State<EventsScreen> createState() => _EventsScreenState();
 }
 
 final List<Meeting> meetings = <Meeting>[];
@@ -12,24 +15,172 @@ List<Meeting> _getDataSource() {
   return meetings;
 }
 
-/// The app which hosts the home page which contains the calendar on it.
-class CalendarApp extends StatefulWidget {
-  @override
-  State<CalendarApp> createState() => _CalendarAppState();
-}
+class _EventsScreenState extends State<EventsScreen> {
+  String selectedDate = DateTime.now().toString();
+  final desc = TextEditingController();
+  bool ban = false;
 
-class _CalendarAppState extends State<CalendarApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Calendar Events',
-        theme: ThemeData.dark(),
-        debugShowCheckedModeBanner: false,
-        home: MyHomePage());
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Calendar Events',
+        ),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ListScreen()));
+              },
+              icon: Icon(Icons.list_alt_outlined)),
+        ],
+      ),
+      body: SfCalendar(
+        view: CalendarView.month,
+        dataSource: MeetingDataSource(_getDataSource()),
+        // by default the month appointment display mode set as Indicator, we can
+        // change the display mode as appointment using the appointment display
+        // mode property
+        onTap: (CalendarTapDetails details) {
+          //CalendarElement element = details.targetElement;
+          //dynamic appointment = details.appointments;
+          DateTime date = details.date!;
+          print(date.toString());
+        },
+        monthViewSettings: const MonthViewSettings(
+            appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await _displayTextInputDialog();
+          setState(() {}); // >:'u
+        },
+        tooltip: 'Add Event',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Future<void> _displayTextInputDialog() async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (BuildContext context2, setState) {
+            return AlertDialog(
+              title: const Text('New event',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Date: ${selectedDate.split(' ')[0]}",
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () async {
+                          //setState(() {
+                          await _selectDate(context2);
+                          setState(
+                            () {},
+                          );
+                          //});
+                        },
+                        icon: const Icon(Icons.edit_calendar),
+                      )
+                    ],
+                  ),
+                  TextField(
+                    onChanged: (value) {},
+                    controller: desc,
+                    decoration:
+                        const InputDecoration(hintText: "Description: "),
+                  ),
+                  Row(
+                    children: [
+                      const Text("Completado: "),
+                      Checkbox(
+                        value: ban,
+                        onChanged: (value) {
+                          setState(() {
+                            ban = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              actions: [
+                ElevatedButton.icon(
+                    onPressed: () {
+                      DateTime day =
+                          DateFormat("yyyy-MM-dd").parse(selectedDate);
+                      DateTime now = DateFormat("yyyy-MM-dd")
+                          .parse(DateTime.now().toString());
+                      Color color = getColor(day, now, ban);
+                      setState(() {
+                        // object meet
+                        print(desc.text);
+                        print(day.toString());
+                        print(color.toString());
+                        print(ban);
+                        meetings.add(Meeting(desc.text, day, day, color, ban));
+                      });
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.add_task),
+                    label: const Text("Create")),
+              ],
+            );
+          });
+        });
+  }
+
+  Color getColor(DateTime day, DateTime now, bool ban) {
+    Color color = const Color.fromARGB(255, 109, 93, 93);
+    if (day.compareTo(now) < 0) {
+      // Event before now
+      if (ban) {
+        color = const Color.fromARGB(255, 9, 186, 33);
+      } else {
+        color = const Color.fromARGB(255, 254, 39, 39);
+      }
+    } else if (day.compareTo(now) == 0) {
+      // Event Today
+      color = const Color.fromARGB(255, 58, 131, 63);
+    } else if (day.compareTo(now) > 0) {
+      // Event after now
+      final Duration durdef = day.difference(now);
+      int diff = durdef.inDays;
+      //print("${diff} Days");
+      if (diff <= 2) {
+        color = const Color.fromARGB(255, 205, 215, 2);
+      } else {
+        color = const Color.fromARGB(255, 11, 116, 221);
+      }
+    }
+    return color;
+  }
+
+  /// calendar chooser
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateFormat("yyyy-MM-dd").parse(selectedDate),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
+    if (picked != null /*&& picked != selectedDate*/) {
+      setState(() {
+        selectedDate = picked.toString();
+      });
+    }
   }
 }
 
-/// The hove page which hosts the calendar
 class MyHomePage extends StatefulWidget {
   /// Creates the home page to display teh calendar widget.
   const MyHomePage({Key? key}) : super(key: key);

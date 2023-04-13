@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialtec/models/popular_model.dart';
 import 'package:socialtec/network/api_popular.dart';
-import 'package:socialtec/screens/post/widgets/item_popular.dart';
+import 'package:socialtec/screens/movies/widgets/item_popular.dart';
 
 class ListPopularVideos extends StatefulWidget {
   const ListPopularVideos({super.key});
