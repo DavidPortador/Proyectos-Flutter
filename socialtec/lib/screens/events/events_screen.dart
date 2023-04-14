@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:socialtec/database/database_events.dart';
+import 'package:socialtec/models/event_model.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:socialtec/screens/events/list_events.dart';
 import 'dart:async';
 
 class EventsScreen extends StatefulWidget {
@@ -16,49 +19,92 @@ List<Meeting> _getDataSource() {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
+  DatabaseEvents? database;
+
+  @override
+  void initState() {
+    super.initState();
+    database = DatabaseEvents();
+  }
+
   String selectedDate = DateTime.now().toString();
   final desc = TextEditingController();
   bool ban = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Calendar Events',
-        ),
-        actions: <Widget>[
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ListScreen()));
+    return FutureBuilder(
+      future: database!.GETALLEVENTS(),
+      builder: (context, AsyncSnapshot<List<EventModel>> snapshot) {
+        if (snapshot.hasData) {
+          print("siuu");
+          meetings.removeRange(0, meetings.length);
+          for (var i = 0; i < snapshot.data!.length; i++) {
+            var objEventModel = snapshot.data![i];
+            var desc = objEventModel.dscEvent;
+            var da = objEventModel.dateEvent;
+            var aux = objEventModel.comp;
+            bool comp;
+
+            aux == 1 ? comp = true : comp = false;
+
+            DateTime day = DateFormat("yyyy-MM-dd").parse(da!);
+            DateTime now =
+                DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
+            Color color = getColor(day, now, comp);
+
+            meetings.add(Meeting(desc!, day, day, color, comp));
+          }
+
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                'Calendar Events',
+              ),
+              actions: <Widget>[
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ListScreen()));
+                    },
+                    icon: Icon(Icons.list_alt_outlined)),
+              ],
+            ),
+            body: SfCalendar(
+              view: CalendarView.month,
+              dataSource: MeetingDataSource(_getDataSource()),
+              // by default the month appointment display mode set as Indicator, we can
+              // change the display mode as appointment using the appointment display
+              // mode property
+              onTap: (CalendarTapDetails details) {
+                //CalendarElement element = details.targetElement;
+                //dynamic appointment = details.appointments;
+                DateTime date = details.date!;
+                print(date.toString());
               },
-              icon: Icon(Icons.list_alt_outlined)),
-        ],
-      ),
-      body: SfCalendar(
-        view: CalendarView.month,
-        dataSource: MeetingDataSource(_getDataSource()),
-        // by default the month appointment display mode set as Indicator, we can
-        // change the display mode as appointment using the appointment display
-        // mode property
-        onTap: (CalendarTapDetails details) {
-          //CalendarElement element = details.targetElement;
-          //dynamic appointment = details.appointments;
-          DateTime date = details.date!;
-          print(date.toString());
-        },
-        monthViewSettings: const MonthViewSettings(
-            appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await _displayTextInputDialog();
-          setState(() {}); // >:'u
-        },
-        tooltip: 'Add Event',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+              monthViewSettings: const MonthViewSettings(
+                  appointmentDisplayMode:
+                      MonthAppointmentDisplayMode.appointment),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                await _displayTextInputDialog();
+                setState(() {}); // >:'u
+              },
+              tooltip: 'Add Event',
+              child: const Icon(Icons.add),
+            ), // This trailing comma makes auto-formatting nicer for build methods.
+          );
+        } else if (snapshot.hasError) {
+          return const Center(
+            child: Text('Ocurrio un error :)'),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 
@@ -117,18 +163,14 @@ class _EventsScreenState extends State<EventsScreen> {
               actions: [
                 ElevatedButton.icon(
                     onPressed: () {
-                      DateTime day =
-                          DateFormat("yyyy-MM-dd").parse(selectedDate);
-                      DateTime now = DateFormat("yyyy-MM-dd")
-                          .parse(DateTime.now().toString());
-                      Color color = getColor(day, now, ban);
                       setState(() {
-                        // object meet
-                        print(desc.text);
-                        print(day.toString());
-                        print(color.toString());
-                        print(ban);
-                        meetings.add(Meeting(desc.text, day, day, color, ban));
+                        database!.INSERT('tblEvents', {
+                          'dscEvent': desc.text,
+                          'dateEvent': selectedDate.split(' ')[0],
+                          'comp': ban ? 1 : 0
+                        }).then((value) {
+                          print('evento insertado');
+                        });
                       });
                       Navigator.pop(context);
                     },
@@ -255,6 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
         monthViewSettings: const MonthViewSettings(
             appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await _displayTextInputDialog();
@@ -383,7 +426,6 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
-
 }
 
 class ListScreen extends StatefulWidget {
@@ -449,49 +491,50 @@ class _ListScreenState extends State<ListScreen> {
             color: MeetingDataSource(meetings).getColor(index).withOpacity(0.5),
             child: Center(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Event $index: "),
-                  Text(MeetingDataSource(meetings).getSubject(index)),
-                  Expanded(child: Container()),
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          title: Text("Event details", textAlign: TextAlign.center, style: TextStyle(color: MeetingDataSource(meetings).getColor(index), fontWeight: FontWeight.bold)),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                  "ID: $index"),
-                              Text(
-                                  "DESC: ${MeetingDataSource(meetings).getSubject(index)}"),
-                              Text(
-                                  "DATE: ${"${MeetingDataSource(meetings).getEndTime(index)}".split(' ')[0]}"),
-                              Text(
-                                  "OVER: ${MeetingDataSource(meetings).isCompleted(index)}"),
-                            ]
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(ctx).pop();
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(14),
-                                child: const Text("Close"),
-                              ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Event $index: "),
+                    Text(MeetingDataSource(meetings).getSubject(index)),
+                    Expanded(child: Container()),
+                    IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Text("Event details",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: MeetingDataSource(meetings)
+                                          .getColor(index),
+                                      fontWeight: FontWeight.bold)),
+                              content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text("ID: $index"),
+                                    Text(
+                                        "DESC: ${MeetingDataSource(meetings).getSubject(index)}"),
+                                    Text(
+                                        "DATE: ${"${MeetingDataSource(meetings).getEndTime(index)}".split(' ')[0]}"),
+                                    Text(
+                                        "OVER: ${MeetingDataSource(meetings).isCompleted(index)}"),
+                                  ]),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop();
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(14),
+                                    child: const Text("Close"),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.density_medium_rounded)
-                  ),
-                ]
-              ),
+                          );
+                        },
+                        icon: Icon(Icons.density_medium_rounded)),
+                  ]),
             ),
           );
         },

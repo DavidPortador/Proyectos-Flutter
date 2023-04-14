@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:socialtec/models/post_model.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:socialtec/models/event_model.dart';
 import 'package:path/path.dart';
 
-class DatabaseHelper {
+class DatabaseEvents {
   
-  static final nameDB = 'SOCIALDB';
-  static final versionDB = 1;
+  static final nameDB = 'SOCIALBD';
+  static final versionDB = 2;
 
   static Database? _database;
   Future<Database> get database async {
@@ -27,10 +27,11 @@ class DatabaseHelper {
   }
 
   _createTables(Database db, int version) async{
-    String query = '''CREATE TABLE tblPost (
-      idPost INTEGER PRIMARY KEY,
-      dscPost VARCHAR(200),
-      datePost DATE
+    String query = '''CREATE TABLE tblEvents (
+      idEvent INTEGER PRIMARY KEY,
+      dscEvent VARCHAR(200),
+      dateEvent DATE,
+      comp INTEGER
     )''';
     db.execute(query);
   }
@@ -43,21 +44,21 @@ class DatabaseHelper {
   Future<int> UPDATE(String tblName,Map<String,dynamic> data) async{
     var conexion = await database;
     return conexion.update(tblName,data,
-    where: 'idPost = ?',
-    whereArgs:[data['idPost']]);
+    where: 'idEvent = ?',
+    whereArgs:[data['idEvent']]);
   }
 
-  Future<int> DELETE(String tblName, int idPost) async {
+  Future<int> DELETE(String tblName, int idEvent) async {
     var conexion = await database;
     return conexion.delete(tblName,
-      where: 'idPost = ?',
-      whereArgs: [idPost]);
+      where: 'idEvent = ?',
+      whereArgs: [idEvent]);
   }
 
-  Future<List<PostModel>> GETALLPOST() async {
+  Future<List<EventModel>> GETALLEVENTS() async {
     var conexion = await database;
-    var result = await conexion.query('tblPost');
-    return result.map((post) => PostModel.fromMap(post)).toList();
+    var result = await conexion.query('tblEvents');
+    return result.map((event) => EventModel.fromMap(event)).toList();
   }
 
 }
