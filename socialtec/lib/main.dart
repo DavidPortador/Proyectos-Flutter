@@ -17,8 +17,6 @@ class MyApp extends StatelessWidget {
       List<ThemeData> lista = [lightTheme, darkTheme, pinkTheme, darkBlueTheme,  purpleTheme];
       return lista[nTheme];
     }
-
-    //
     
     return ChangeNotifierProvider(
       create: (_) => ModelTheme(),
@@ -33,8 +31,6 @@ class MyApp extends StatelessWidget {
         }
       ),
     );
-    
-    //
 
   }
 }

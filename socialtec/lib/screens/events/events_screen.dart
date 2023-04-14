@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:socialtec/database/database_events.dart';
 import 'package:socialtec/models/event_model.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:socialtec/screens/events/list_events.dart';
 import 'dart:async';
 
 class EventsScreen extends StatefulWidget {
