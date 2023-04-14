@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialtec/screens/dashboard/dashboard_screen.dart';
 import 'package:socialtec/screens/login/login_screen.dart';
+import 'package:socialtec/screens/movies/detail_screen.dart';
 import 'package:socialtec/screens/onboarding/onboarding_screen.dart';
 import 'package:socialtec/screens/signup/signup_screen.dart';
 import 'package:socialtec/screens/theme/theme_screen.dart';

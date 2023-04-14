@@ -38,11 +38,13 @@ class _ListPopularVideosState extends State<ListPopularVideos> {
               ), 
               itemCount: snapshot.data != null ? snapshot.data!.length : 0,
               itemBuilder: (context, index) {
-                return ItemPopular(popularModel: snapshot.data![index]);
+                return ItemPopular(
+                  popularModel: snapshot.data![index],
+                );
               },
             );
           }else if( snapshot.hasError){
-            return const Center(child: Text('Ocurrio un error :()'),);
+            return const Center(child: Text('Ocurrio un error :('),);
           }else{
             return const CircularProgressIndicator();
           }
