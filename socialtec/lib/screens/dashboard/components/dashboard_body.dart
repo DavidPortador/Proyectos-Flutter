@@ -48,7 +48,7 @@ class DashboardBody extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, '/popular');
             },
-            label: Text("API"),
+            label: Text("Movies"),
             style: ElevatedButton.styleFrom(
               primary: Colors.purple,
               //onPrimary: Colors.black,

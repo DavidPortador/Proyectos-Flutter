@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 
 class DatabaseHelper {
   
-  static final nameDB = 'SOCIALDB';
+  static final nameDB = 'POSTS';
   static final versionDB = 1;
 
   static Database? _database;

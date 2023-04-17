@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:socialtec/models/event_model.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseEvents {
   
-  static final nameDB = 'SOCIALBD';
+  static final nameDB = 'EVENTS';
   static final versionDB = 2;
 
   static Database? _database;

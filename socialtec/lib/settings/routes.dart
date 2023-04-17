@@ -7,7 +7,7 @@ import 'package:socialtec/screens/signup/signup_screen.dart';
 import 'package:socialtec/screens/theme/theme_screen.dart';
 import 'package:socialtec/screens/post/post_screen.dart';
 import 'package:socialtec/screens/post/add_post_screen.dart';
-import 'package:socialtec/screens/movies/list_popular_videos.dart';
+import 'package:socialtec/screens/movies/list_popular.dart';
 import 'package:socialtec/screens/events/events_screen.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
@@ -21,8 +21,8 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/theme': (BuildContext context) => ThemeScreen(),
     '/post': (BuildContext context) => PostScreen(),
     '/add': (BuildContext context) => AddPostScreen(),
-    '/popular': (BuildContext context) => ListPopularVideos(),
+    '/popular': (BuildContext context) => ListPopular(),
     '/events': (BuildContext context) => EventsScreen(),
-
+  
   };
 }

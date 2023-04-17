@@ -22,8 +22,8 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   void initState() {
-    super.initState();
     database = DatabaseEvents();
+    super.initState();
   }
 
   String selectedDate = DateTime.now().toString();
@@ -72,12 +72,7 @@ class _EventsScreenState extends State<EventsScreen> {
             body: SfCalendar(
               view: CalendarView.month,
               dataSource: MeetingDataSource(_getDataSource()),
-              // by default the month appointment display mode set as Indicator, we can
-              // change the display mode as appointment using the appointment display
-              // mode property
               onTap: (CalendarTapDetails details) {
-                //CalendarElement element = details.targetElement;
-                //dynamic appointment = details.appointments;
                 DateTime date = details.date!;
                 print(date.toString());
               },
@@ -92,7 +87,7 @@ class _EventsScreenState extends State<EventsScreen> {
               },
               tooltip: 'Add Event',
               child: const Icon(Icons.add),
-            ), // This trailing comma makes auto-formatting nicer for build methods.
+            ),
           );
         } else if (snapshot.hasError) {
           return const Center(
@@ -438,35 +433,6 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text('Bob Cholo'),
-              accountEmail: Text('bob_cholo@gmail.com'),
-              // currentAccountPicture: Image(
-              //   image: AssetImage('assets/customs/bob_cholo.png')
-              // ),
-            ),
-            ListTile(
-              title: Text('Themes'),
-              subtitle: Text('Change your theme here'),
-              leading: Icon(Icons.brightness_6_rounded),
-              trailing: Icon(Icons.chevron_right),
-              onTap: () {
-                //Navigator.pushNamed(context, '/theme');
-              },
-            ),
-            ListTile(
-              title: Text('Titulo 2'),
-              subtitle: Text('subtitulo 2'),
-              leading: Icon(Icons.settings),
-              trailing: Icon(Icons.chevron_right),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
       appBar: AppBar(
         title: const Text(
           'List Events',
