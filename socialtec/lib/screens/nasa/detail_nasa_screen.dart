@@ -82,12 +82,8 @@ class _DetailNasaScreenState extends State<DetailNasaScreen> {
           children: <Widget>[
             Positioned.fill(
               child: PhotoView(
-                loadingBuilder: (context, progress) => Center(
-                  child: Container(
-                    width: 20.0,
-                    height: 20.0,
-                    child: const CircularProgressIndicator(),
-                  ),
+                loadingBuilder: (context, progress) => const Center(
+                  child: CircularProgressIndicator(),
                 ),
                 imageProvider: NetworkImage(
                     'https://api.nasa.gov/EPIC/archive/${widget.tipo}/$anio/$mes/$dia/png/${widget.nasaModel.image!}.png?api_key=ut9N5GCDqEZI6KTzNkCdFIOtD1hev0cCN1xp2AYs'),
