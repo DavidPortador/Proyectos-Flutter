@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:socialtec/components/footer_account_acheck.dart';
+import 'package:socialtec/screens/login/components/footer_account_acheck.dart';
 import 'package:socialtec/settings/theme_config.dart';
 
 class SignUpForm extends StatefulWidget {

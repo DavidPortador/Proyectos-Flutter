@@ -1,142 +1,225 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:socialtec/settings/model_theme.dart';
-import 'package:socialtec/settings/responsive.dart';
-import 'package:socialtec/components/background.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-
-import 'components/theme_top.dart';
-import 'components/theme_body.dart';
-
-int counter = 0;
+import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:socialtec/settings/theme_config.dart';
 
 class ThemeScreen extends StatefulWidget {
-  const ThemeScreen({super.key});
+  const ThemeScreen({Key? key}) : super(key: key);
 
   @override
-  State<ThemeScreen> createState() => _ThemeScreenState();
+  _ThemeScreenState createState() => _ThemeScreenState();
 }
 
 class _ThemeScreenState extends State<ThemeScreen> {
-  void incrementCounter() {
+  int _counter = 0;
+
+  void _incrementCounter() {
     setState(() {
-      counter++;
+      _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return ThemeSwitchingArea(
-        child: Scaffold(
-          drawer: Drawer(
-            child: ListView(
-              children: [
-                UserAccountsDrawerHeader(
-                  accountName: Text('Bob Cholo'),
-                  accountEmail: Text('bob_cholo@gmail.com'),
-                  currentAccountPicture: Image(
-                    image: AssetImage('assets/customs/bob_cholo.png')
+      child: Scaffold(
+        drawer: Drawer(
+          child: SafeArea(
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topRight,
+                  child: ThemeSwitcher.withTheme(
+                    builder: (_, switcher, theme) {
+                      return IconButton(
+                        onPressed: () => switcher.changeTheme(
+                          theme: theme.brightness == Brightness.light
+                              ? darkTheme
+                              : lightTheme,
+                        ),
+                        icon: const Icon(Icons.brightness_3, size: 25),
+                      );
+                    },
                   ),
-                ),
-                ListTile(
-                  title: Text('Themes'),
-                  subtitle: Text('Change your theme here'),
-                  leading: Icon(Icons.brightness_6_rounded),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/theme');
-                  },
-                ),
-                ListTile(
-                  title: Text('Titulo 2'),
-                  subtitle: Text('subtitulo 2'),
-                  leading: Icon(Icons.settings),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {},
                 ),
               ],
             ),
           ),
-          appBar: AppBar(
-            title: const Text(
-              'Choose Theme',
-            ),
-          ),
-          body: const Background(
-            child: SingleChildScrollView(
-              child: Responsive(
-                  mobile: MobileThemeScreen(), desktop: DesktopThemeScreen()),
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(
-              Icons.add,
-            ),
+        ),
+        appBar: AppBar(
+          title: const Text(
+            'Flutter Demo Home Page',
           ),
         ),
-    );
-  }
-}
-
-class MobileThemeScreen extends StatefulWidget {
-  const MobileThemeScreen({super.key});
-
-  @override
-  State<MobileThemeScreen> createState() => _MobileThemeScreenState();
-}
-
-class _MobileThemeScreenState extends State<MobileThemeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ThemeTop(),
-        Row(
-          children: [
-            Spacer(),
-            Expanded(
-              flex: 8,
-              child: ThemeBody(),
-            ),
-            Spacer(),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class DesktopThemeScreen extends StatefulWidget {
-  const DesktopThemeScreen({super.key});
-
-  @override
-  State<DesktopThemeScreen> createState() => _DesktopThemeScreenState();
-}
-
-class _DesktopThemeScreenState extends State<DesktopThemeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Expanded(
-          child: ThemeTop(),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 450,
-                child: ThemeBody(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              const Text(
+                'You have pushed the button this many times:',
+              ),
+              Text(
+                '$_counter',
+                style: const TextStyle(fontSize: 200),
+              ),
+              CheckboxListTile(
+                title: const Text('Slow Animation'),
+                value: timeDilation == 5.0,
+                onChanged: (value) {
+                  setState(() {
+                    timeDilation = value != null && value ? 5.0 : 1.0;
+                  });
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  ThemeSwitcher.switcher(
+                    clipper: const ThemeSwitcherBoxClipper(),
+                    builder: (context, switcher) {
+                      return OutlinedButton(
+                        child: const Text('Box Animation'),
+                        onPressed: () {
+                          switcher.changeTheme(
+                            theme: ThemeModelInheritedNotifier.of(context)
+                                        .theme
+                                        .brightness ==
+                                    Brightness.light
+                                ? darkTheme
+                                : lightTheme,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  ThemeSwitcher(
+                    clipper: const ThemeSwitcherCircleClipper(),
+                    builder: (context) {
+                      return OutlinedButton(
+                        child: const Text('Circle Animation'),
+                        onPressed: () {
+                          ThemeSwitcher.of(context).changeTheme(
+                            theme: ThemeModelInheritedNotifier.of(context)
+                                        .theme
+                                        .brightness ==
+                                    Brightness.light
+                                ? darkTheme
+                                : lightTheme,
+                          );
+                        },
+                      );
+                    },
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  ThemeSwitcher(
+                    clipper: const ThemeSwitcherBoxClipper(),
+                    builder: (context) {
+                      return OutlinedButton(
+                        child: const Text('Box (Reverse)'),
+                        onPressed: () {
+                          var brightness =
+                              ThemeModelInheritedNotifier.of(context)
+                                  .theme
+                                  .brightness;
+                          ThemeSwitcher.of(context).changeTheme(
+                            theme: brightness == Brightness.light
+                                ? darkTheme
+                                : lightTheme,
+                            isReversed:
+                                brightness == Brightness.dark ? true : false,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  ThemeSwitcher(
+                    clipper: const ThemeSwitcherCircleClipper(),
+                    builder: (context) {
+                      return OutlinedButton(
+                        child: const Text('Circle (Reverse)'),
+                        onPressed: () {
+                          var brightness =
+                              ThemeModelInheritedNotifier.of(context)
+                                  .theme
+                                  .brightness;
+                          ThemeSwitcher.of(context).changeTheme(
+                            theme: brightness == Brightness.light
+                                ? darkTheme
+                                : lightTheme,
+                            isReversed:
+                                brightness == Brightness.dark ? true : false,
+                          );
+                        },
+                      );
+                    },
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ThemeSwitcher(
+                    builder: (context) {
+                      return Checkbox(
+                        value: ThemeModelInheritedNotifier.of(context).theme ==
+                            pinkTheme,
+                        onChanged: (needPink) {
+                          ThemeSwitcher.of(context).changeTheme(
+                            theme: needPink != null && needPink
+                                ? pinkTheme
+                                : lightTheme,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  ThemeSwitcher(
+                    builder: (context) {
+                      return Checkbox(
+                        value: ThemeModelInheritedNotifier.of(context).theme ==
+                            darkBlueTheme,
+                        onChanged: (needDarkBlue) {
+                          ThemeSwitcher.of(context).changeTheme(
+                            theme: needDarkBlue != null && needDarkBlue
+                                ? darkBlueTheme
+                                : lightTheme,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  ThemeSwitcher(
+                    builder: (context) {
+                      return Checkbox(
+                        value: ThemeModelInheritedNotifier.of(context).theme ==
+                            purpleTheme,
+                        onChanged: (needBlue) {
+                          ThemeSwitcher.of(context).changeTheme(
+                            theme: needBlue != null && needBlue
+                                ? purpleTheme
+                                : lightTheme,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
         ),
-      ],
+        floatingActionButton: FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'Increment',
+          child: const Icon(
+            Icons.add,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -11,26 +11,25 @@ class DashboardTop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        
         Text(
           "Welcome to S O C I A L T E C",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: defaultPadding / 2),
-        Row(
-          children: [
-            Expanded(
-              flex: 8,
-              child: LottieBuilder.asset(
-                "assets/animation/cute_2.json",
-                height: 350,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: defaultPadding * 2),
+        SizedBox(height: defaultPadding),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       flex: 8,
+        //       child: LottieBuilder.asset(
+        //         "assets/animation/cute_2.json",
+        //         height: 350,
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(height: defaultPadding * 2),
       ],
     );
   }

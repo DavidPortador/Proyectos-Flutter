@@ -56,6 +56,18 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
+            icon: Icon(Icons.cloud_circle_outlined),
+            onPressed: () {
+              Navigator.pushNamed(context, '/nasa');
+            },
+            label: Text("Nasa"),
+            style: ElevatedButton.styleFrom(
+              primary: Color.fromARGB(255, 5, 132, 149),
+              //onPrimary: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
             icon: Icon(Icons.logout),
             onPressed: () {
               Navigator.pop(context);

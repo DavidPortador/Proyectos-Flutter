@@ -28,13 +28,9 @@ class _ThemeBodyState extends State<ThemeBody> {
               clipper: const ThemeSwitcherBoxClipper(),
               builder: (context) {
                 return ElevatedButton.icon(
-                  icon: Icon(Icons.brightness_high_rounded),
+                  icon: const Icon(Icons.brightness_high_rounded),
                   label: const Text('Light'),
                   onPressed: () {
-                    var brightness =
-                        ThemeModelInheritedNotifier.of(context)
-                            .theme
-                            .brightness;
                     ThemeSwitcher.of(context).changeTheme(
                       theme: lightTheme,
                       isReversed: true,
@@ -49,13 +45,9 @@ class _ThemeBodyState extends State<ThemeBody> {
               clipper: const ThemeSwitcherCircleClipper(),
               builder: (context) {
                 return ElevatedButton.icon(
-                  icon: Icon(Icons.brightness_2_sharp),
+                  icon: const Icon(Icons.brightness_2_sharp),
                   label: const Text('Dark'),
                   onPressed: () {
-                    var brightness =
-                        ThemeModelInheritedNotifier.of(context)
-                            .theme
-                            .brightness;
                     ThemeSwitcher.of(context).changeTheme(
                       theme: darkTheme,
                       isReversed: false,
@@ -88,13 +80,9 @@ class _ThemeBodyState extends State<ThemeBody> {
                           primary: pinkPrimaryColor,
                           //onPrimary: Colors.black,
                         ),
-                        icon: Icon(Icons.brightness_7_outlined),
+                        icon: const Icon(Icons.brightness_7_outlined),
                         label: const Text('Pink'),
                         onPressed: () {
-                          var brightness =
-                              ThemeModelInheritedNotifier.of(context)
-                                  .theme
-                                  .brightness;
                           ThemeSwitcher.of(context).changeTheme(
                             theme: pinkTheme,
                             isReversed: true,
@@ -112,13 +100,9 @@ class _ThemeBodyState extends State<ThemeBody> {
                           primary: bluePrimaryColor,
                           //onPrimary: Colors.black,
                         ),
-                        icon: Icon(Icons.brightness_7_outlined),
+                        icon: const Icon(Icons.brightness_7_outlined),
                         label: const Text('Dark Blue'),
                         onPressed: () {
-                          var brightness =
-                              ThemeModelInheritedNotifier.of(context)
-                                  .theme
-                                  .brightness;
                           ThemeSwitcher.of(context).changeTheme(
                             theme: darkBlueTheme,
                             isReversed: true,
@@ -136,13 +120,9 @@ class _ThemeBodyState extends State<ThemeBody> {
                           primary: purplePrimaryColor,
                           //onPrimary: Colors.black,
                         ),
-                        icon: Icon(Icons.brightness_7_outlined),
+                        icon: const Icon(Icons.brightness_7_outlined),
                         label: const Text('Purple'),
                         onPressed: () {
-                          var brightness =
-                              ThemeModelInheritedNotifier.of(context)
-                                  .theme
-                                  .brightness;
                           ThemeSwitcher.of(context).changeTheme(
                             theme: purpleTheme,
                             isReversed: true,
@@ -162,7 +142,7 @@ class _ThemeBodyState extends State<ThemeBody> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('Circle Animation', textAlign: TextAlign.center,),
+                  const Text('Circle Animation', textAlign: TextAlign.center,),
                   const SizedBox(height: 16),
                   ThemeSwitcher(
                     clipper: const ThemeSwitcherCircleClipper(),
@@ -172,13 +152,9 @@ class _ThemeBodyState extends State<ThemeBody> {
                           primary: pinkPrimaryColor,
                           //onPrimary: Colors.black,
                         ),
-                        icon: Icon(Icons.brightness_7_outlined),
+                        icon: const Icon(Icons.brightness_7_outlined),
                         label: const Text('Pink'),
                         onPressed: () {
-                          var brightness =
-                              ThemeModelInheritedNotifier.of(context)
-                                  .theme
-                                  .brightness;
                           ThemeSwitcher.of(context).changeTheme(
                             theme: pinkTheme,
                             isReversed: false,
@@ -196,13 +172,9 @@ class _ThemeBodyState extends State<ThemeBody> {
                           primary: bluePrimaryColor,
                           //onPrimary: Colors.black,
                         ),
-                        icon: Icon(Icons.brightness_7_outlined),
+                        icon: const Icon(Icons.brightness_7_outlined),
                         label: const Text('Dark Blue'),
                         onPressed: () {
-                          var brightness =
-                              ThemeModelInheritedNotifier.of(context)
-                                  .theme
-                                  .brightness;
                           ThemeSwitcher.of(context).changeTheme(
                             theme: darkBlueTheme,
                             isReversed: false,
@@ -220,13 +192,9 @@ class _ThemeBodyState extends State<ThemeBody> {
                           primary: purplePrimaryColor,
                           //onPrimary: Colors.black,
                         ),
-                        icon: Icon(Icons.brightness_7_outlined),
+                        icon: const Icon(Icons.brightness_7_outlined),
                         label: const Text('Purple'),
                         onPressed: () {
-                          var brightness =
-                              ThemeModelInheritedNotifier.of(context)
-                                  .theme
-                                  .brightness;
                           ThemeSwitcher.of(context).changeTheme(
                             theme: purpleTheme,
                             isReversed: false,
@@ -242,7 +210,7 @@ class _ThemeBodyState extends State<ThemeBody> {
             const SizedBox(height: 16),
           ],
         ),
-        SizedBox(height: defaultPadding),
+        const SizedBox(height: defaultPadding),
       ],
     );
   }

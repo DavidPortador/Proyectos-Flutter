@@ -25,7 +25,7 @@ class _ListFavoriteState extends State<ListFavorite> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Row(
+      appBar: AppBar(title: const Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text('List Favorites Movies '),
@@ -58,7 +58,7 @@ class _ListFavoriteState extends State<ListFavorite> {
                             favorite: snapshotQuery.data!,
                           );
                         }else{
-                          return SizedBox.shrink();;
+                          return const SizedBox.shrink();
                         }
                       } else {
                         return const Center(

@@ -30,12 +30,13 @@ class _ListPopularState extends State<ListPopular> {
         title: const Text('List Popular'),
         actions: <Widget>[
           GestureDetector(
-            onTap: () => Navigator.push(
-              context,
+            onTap: () => Navigator.push(context,
               MaterialPageRoute(
                 builder: (context) => ListFavorite(),
               ),
-            ),
+            ).then((value) {
+              setState(() {});
+            }),
             child: Hero(
                 tag: 'navigate',
                 child: Icon(Icons.format_list_numbered_rounded)),
@@ -55,8 +56,8 @@ class _ListPopularState extends State<ListPopular> {
                     crossAxisSpacing: 10),
                 itemCount: snapshot.data != null ? snapshot.data!.length : 0,
                 itemBuilder: (context, index) {
-                  //query
-                  /*return ItemPopular(
+                //query
+                /*return ItemPopular(
                   popularModel: snapshot.data![index],
                   favorite: false,
                 );*/

@@ -6,21 +6,19 @@ import 'package:socialtec/network/api_popular.dart';
 import 'package:socialtec/database/database_movies.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class DetailScreen extends StatefulWidget {
-  const DetailScreen(
-      {super.key, required this.popularModel, required this.favorite});
+class DetailMovilScreen extends StatefulWidget {
+  const DetailMovilScreen({super.key, required this.popularModel, required this.favorite});
 
   final PopularModel popularModel;
   final bool favorite;
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
+  State<DetailMovilScreen> createState() => _DetailMovilScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailMovilScreenState extends State<DetailMovilScreen> {
   ApiPopular? apiPopular;
   DatabaseMovies? database;
-  late YoutubePlayerController _controller;
 
   @override
   void initState() {
@@ -33,11 +31,11 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     var fav;
     widget.favorite
-        ? fav = Icon(
-            Icons.favorite_rounded,
-            color: Colors.redAccent,
-          )
-        : fav = Icon(Icons.favorite_outline_rounded);
+      ? fav = const Icon(
+          Icons.favorite_rounded,
+          color: Colors.redAccent,
+        )
+      : fav = const Icon(Icons.favorite_outline_rounded);
 
     return Scaffold(
         appBar: AppBar(
@@ -47,14 +45,11 @@ class _DetailScreenState extends State<DetailScreen> {
               onPressed: () {
                 if (widget.favorite) {
                   setState(() {
-                    database!
-                        .DELETE('tblMovies', widget.popularModel.id!)
+                    database!.DELETE('tblMovies', widget.popularModel.id!)
                         .then((value) {
                       print('favorito borrado');
                     });
-                    
-                    //Navigator.pop(context);
-                    Navigator.pushNamed(context, '/popular');
+                    Navigator.pop(context);
                   });
                 } else {
                   setState(() {
@@ -62,8 +57,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         {'idMovie': widget.popularModel.id!}).then((value) {
                       print('favorito insertado');
                     });
-                    //Navigator.pop(context);
-                    Navigator.pushNamed(context, '/popular');
+                    Navigator.pop(context);
                   });
                 }
               },
@@ -93,8 +87,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           if (snapshot.data == "") {
                             return Container(
                               height: 200.0,
-                              child: const Center(
-                                  child: Text("Pelicula sin trailer :(")),
+                              child: const Center(child: Text("Pelicula sin trailer :(")),
                             );
                           } else {
                             return YoutubePlayer(
@@ -107,8 +100,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             );
                           }
                         } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         }
                       }),
                   Padding(
@@ -137,21 +129,17 @@ class _DetailScreenState extends State<DetailScreen> {
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount:
-                                    (widget.popularModel.popularity! / 1000)
-                                            .toInt() +
-                                        1,
+                                    widget.popularModel.popularity! ~/ 1000 + 1,
                                 itemBuilder: (context, index) {
-                                  var ico;
-                                  if (index ==
-                                      (widget.popularModel.popularity! / 1000)
-                                          .toInt()) {
+                                  IconData ico;
+                                  if (index == widget.popularModel.popularity! ~/ 1000) {
                                     ico = Icons.star_half;
                                   } else {
                                     ico = Icons.star;
                                   }
                                   return Icon(
                                     ico,
-                                    shadows: <Shadow>[
+                                    shadows: const <Shadow>[
                                       Shadow(
                                           color: Colors.black, blurRadius: 15.0)
                                     ],
@@ -162,7 +150,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               )),
                           const SizedBox(height: 5),
                           const Text(
-                            "Descripcion:",
+                            "Descripcion: ",
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,

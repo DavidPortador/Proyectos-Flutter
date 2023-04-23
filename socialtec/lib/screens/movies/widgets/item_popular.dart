@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:socialtec/models/popular_model.dart';
-import 'package:socialtec/screens/movies/detail_screen.dart';
+import 'package:socialtec/screens/movies/detail_movie_screen.dart';
 
-class ItemPopular extends StatelessWidget {
+class ItemPopular extends StatefulWidget {
   const ItemPopular(
       {super.key, required this.popularModel, required this.favorite});
 
@@ -10,9 +10,14 @@ class ItemPopular extends StatelessWidget {
   final bool favorite;
 
   @override
+  State<ItemPopular> createState() => _ItemPopularState();
+}
+
+class _ItemPopularState extends State<ItemPopular> {
+  @override
   Widget build(BuildContext context) {
     Color color;
-    favorite ? color = Colors.red : color = Colors.grey;
+    widget.favorite ? color = Colors.red : color = Colors.grey;
     return InkWell(
       child: Stack(
         children: [
@@ -21,7 +26,7 @@ class ItemPopular extends StatelessWidget {
               fit: BoxFit.fill,
               placeholder: const AssetImage('assets/customs/loading.gif'),
               image: NetworkImage(
-                  'https://image.tmdb.org/t/p/w500/${popularModel.posterPath}')),
+                  'https://image.tmdb.org/t/p/w500/${widget.popularModel.posterPath}')),
           Icon(
             Icons.favorite,
             shadows: <Shadow>[Shadow(color: Colors.black, blurRadius: 15.0)],
@@ -30,15 +35,14 @@ class ItemPopular extends StatelessWidget {
           ),
         ],
       ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                DetailScreen(popularModel: popularModel, favorite: favorite),
-          ),
-        );
-      },
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailMovilScreen(popularModel: widget.popularModel, favorite: widget.favorite),
+        ),
+      ).then((value) {
+        setState(() {});
+      }),
     );
   }
 }
