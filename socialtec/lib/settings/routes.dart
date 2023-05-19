@@ -13,8 +13,8 @@ import 'package:socialtec/screens/events/events_screen.dart';
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
 
-     '/': (BuildContext context) => OnboardingScreen(),
-    //'/': (BuildContext context) => DashboardScreen(),
+    //'/': (BuildContext context) => OnboardingScreen(),
+    '/': (BuildContext context) => LoginScreen(),
     '/login': (BuildContext context) => LoginScreen(),
     '/signup': (BuildContext context) => SignUpScreen(),
     '/dashboard': (BuildContext context) => DashboardScreen(),

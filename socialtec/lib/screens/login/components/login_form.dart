@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
+import 'package:socialtec/auth_social/auth_google.dart';
 import 'package:socialtec/screens/login/components/footer_account_acheck.dart';
+import 'package:socialtec/screens/login/welcome_screen.dart';
 import 'package:socialtec/settings/theme_config.dart';
 
 class LoginForm extends StatelessWidget {
@@ -44,21 +46,6 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final email = TextEditingController();
     final pass = TextEditingController();
-
-    final btnGoogle = SocialLoginButton(
-        borderRadius: 50,
-        buttonType: SocialLoginButtonType.google,
-        onPressed: () {});
-
-    final btnFacebook = SocialLoginButton(
-        borderRadius: 50,
-        buttonType: SocialLoginButtonType.facebook,
-        onPressed: () {});
-
-    final btnGithub = SocialLoginButton(
-        borderRadius: 50,
-        buttonType: SocialLoginButtonType.github,
-        onPressed: () {});
 
     return Form(
       child: Column(
@@ -135,49 +122,42 @@ class LoginForm extends StatelessWidget {
               label: Text(
                 "Login",
               ),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 56),
+              ),
             ),
           ),
-
           const SizedBox(height: defaultPadding),
           Text('Sign in with', textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold),),
           const SizedBox(height: defaultPadding / 2),
-          
-          // La dvd se ven feos :c
-          // btnFacebook,
-          // const SizedBox(height: defaultPadding / 2),
-          // btnGithub,
-          // const SizedBox(height: defaultPadding / 2),
-          // btnGoogle,
-          
           Row(
             children: <Widget>[
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.facebook),
-                  label: const Text('Facebook'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blueAccent,
-                    //onPrimary: Colors.black,
-                  ),
-                ),
+              SocialLoginButton(
+                buttonType: SocialLoginButtonType.google,
+                mode: SocialLoginButtonMode.single,
+                borderRadius: 30,
+                onPressed: () {
+                  signInWithGoogle().whenComplete(() {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return WelcomeScreen();
+                        },
+                      ),
+                    );
+                  });
+                }
               ),
               const SizedBox(width: defaultPadding / 2),
-              Expanded(child: ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.hvac_outlined),
-                  label: const Text('Spotify'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    //onPrimary: Colors.black,
-                  ),
-                ),
+              SocialLoginButton(
+                buttonType: SocialLoginButtonType.github,
+                mode: SocialLoginButtonMode.single,
+                borderRadius: 30,
+                onPressed: () {}
               ),
               const SizedBox(width: defaultPadding / 2),
             ],
           ),
-
-
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
             press: () {

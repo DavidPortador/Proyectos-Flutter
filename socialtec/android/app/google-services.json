@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "65390635798",
+    "project_id": "socialtec-f33c3",
+    "storage_bucket": "socialtec-f33c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65390635798:android:0afb502fff36338c367e37",
+        "android_client_info": {
+          "package_name": "com.example.socialtec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65390635798-k2qks1fj5e3b8c94mc4hju7lt7tuiqij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAprHBLIctFXmoC91Iz6OWlsBn6af1QoME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65390635798-k2qks1fj5e3b8c94mc4hju7lt7tuiqij.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

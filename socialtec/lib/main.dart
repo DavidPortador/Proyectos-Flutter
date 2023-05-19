@@ -3,8 +3,13 @@ import 'package:socialtec/settings/theme_config.dart';
 import 'package:socialtec/settings/model_theme.dart';
 import 'package:socialtec/settings/routes.dart';
 import 'package:provider/provider.dart';
-
-void main() => runApp(const MyApp());
+import 'package:firebase_core/firebase_core.dart';
+ 
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
