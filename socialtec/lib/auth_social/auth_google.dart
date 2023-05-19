@@ -22,7 +22,7 @@ Future<UserCredential> signInWithGoogle() async {
   );
   // Account data
   user = FirebaseAuth.instance.currentUser;
-  print('USRR--> $user');
+  print('USR GOOGLE -> $user');
   name = user!.displayName;
   email = user!.email;
   imageUrl = user!.photoURL;

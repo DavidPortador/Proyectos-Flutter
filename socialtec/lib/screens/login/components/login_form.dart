@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
+import 'package:socialtec/auth_social/auth_github.dart';
 import 'package:socialtec/auth_social/auth_google.dart';
 import 'package:socialtec/screens/login/components/footer_account_acheck.dart';
 import 'package:socialtec/screens/login/welcome_screen.dart';
@@ -153,7 +154,17 @@ class LoginForm extends StatelessWidget {
                 buttonType: SocialLoginButtonType.github,
                 mode: SocialLoginButtonMode.single,
                 borderRadius: 30,
-                onPressed: () {}
+                onPressed: () {
+                  signInWithGitHub(context).whenComplete(() {
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return WelcomeScreen();
+                    //     },
+                    //   ),
+                    // );
+                  });
+                }
               ),
               const SizedBox(width: defaultPadding / 2),
             ],
