@@ -5,16 +5,15 @@ import 'package:socialtec/models/post_model.dart';
 class AddPostScreen extends StatelessWidget {
   AddPostScreen({super.key});
 
-  DatabaseHelper database = DatabaseHelper();
-  PostModel? objPosmodel;
-
+  final DatabaseHelper database = DatabaseHelper();
+  
   @override
   Widget build(BuildContext context) {
-    
+    PostModel? objPosmodel;
     final txtConPost = TextEditingController();
     if( ModalRoute.of(context)!.settings.arguments != null ){
       objPosmodel = ModalRoute.of(context)!.settings.arguments as PostModel;
-      txtConPost.text = objPosmodel!.dscPost!;
+      txtConPost.text = objPosmodel.dscPost!;
     }
 
     return Scaffold(
@@ -60,7 +59,7 @@ class AddPostScreen extends StatelessWidget {
                   });
                 }else{
                   database.UPDATE('tblPost',{
-                    'idPost' : objPosmodel!.idPost,
+                    'idPost' : objPosmodel.idPost,
                     'dscPost' : txtConPost.text,
                     'datePost' : DateTime.now().toString()
                   }).then((value){

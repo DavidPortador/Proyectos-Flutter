@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:github_sign_in/github_sign_in.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
-import 'package:socialtec/auth_social/auth_github.dart';
-import 'package:socialtec/auth_social/auth_google.dart';
 import 'package:socialtec/screens/login/components/footer_account_acheck.dart';
 import 'package:socialtec/screens/login/welcome_screen.dart';
 import 'package:socialtec/settings/theme_config.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   showAlertDialog(BuildContext context, String title, String content) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK"),
+      child: const Text("OK"),
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -39,7 +45,7 @@ class LoginForm extends StatelessWidget {
   bool isEmail(String em) {
     String p =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = new RegExp(p);
+    RegExp regExp = RegExp(p);
     return regExp.hasMatch(em);
   }
 
@@ -48,11 +54,17 @@ class LoginForm extends StatelessWidget {
     final email = TextEditingController();
     final pass = TextEditingController();
 
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GitHubSignIn githubSignIn = GitHubSignIn(
+        clientId: 'cff231e5bf34d6f8256a',
+        clientSecret: '90fbda73afab321f2feaa4312d8fb209dda1705b',
+        redirectUrl: 'https://socialtec-f33c3.firebaseapp.com/__/auth/handler');
+
     return Form(
       child: Column(
         children: [
           const SizedBox(height: defaultPadding / 2),
-          Text(
+          const Text(
             "Sing In",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
           ),
@@ -60,15 +72,15 @@ class LoginForm extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: TextFormField(
               controller: email,
-              style: TextStyle(color: Colors.black87),
+              style: const TextStyle(color: Colors.black87),
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               //cursorColor: kPrimaryColor,
               onSaved: (email) {},
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your email",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.account_circle_rounded),
                 ),
               ),
@@ -78,14 +90,14 @@ class LoginForm extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: TextFormField(
               controller: pass,
-              style: TextStyle(color: Colors.black87),
+              style: const TextStyle(color: Colors.black87),
               textInputAction: TextInputAction.done,
               obscureText: true,
               //cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -95,7 +107,7 @@ class LoginForm extends StatelessWidget {
           Hero(
             tag: "login_btn",
             child: ElevatedButton.icon(
-              icon: Icon(Icons.login),
+              icon: const Icon(Icons.login),
               onPressed: () {
                 var em = email.text;
                 var ps = pass.text;
@@ -107,12 +119,6 @@ class LoginForm extends StatelessWidget {
                       context, 'Empty field', 'Complete Password field');
                 } else {
                   if (isEmail(em)) {
-                    //showAlertDialog(context, 'Login Success', 'Email correct and password accepted');
-                    //setState(() {});
-                    //Future.delayed(Duration(milliseconds: 1000)).then((value) {
-                      //setState(() {});
-                      //Navigator.pushNamed(context, '/theme');
-                    //});
                     Navigator.pushNamed(context, '/dashboard');
                   } else {
                     showAlertDialog(
@@ -120,7 +126,7 @@ class LoginForm extends StatelessWidget {
                   }
                 }
               },
-              label: Text(
+              label: const Text(
                 "Login",
               ),
               style: ElevatedButton.styleFrom(
@@ -129,43 +135,74 @@ class LoginForm extends StatelessWidget {
             ),
           ),
           const SizedBox(height: defaultPadding),
-          Text('Sign in with', textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold),),
+          const Text(
+            'Sign in with',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: defaultPadding / 2),
           Row(
             children: <Widget>[
               SocialLoginButton(
-                buttonType: SocialLoginButtonType.google,
-                mode: SocialLoginButtonMode.single,
-                borderRadius: 30,
-                onPressed: () {
-                  signInWithGoogle().whenComplete(() {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return WelcomeScreen();
-                        },
-                      ),
-                    );
-                  });
-                }
-              ),
+                  buttonType: SocialLoginButtonType.google,
+                  mode: SocialLoginButtonMode.single,
+                  borderRadius: 30,
+                  onPressed: () async {
+                    if (await googleSignIn.isSignedIn()) {
+                      googleSignIn.signOut();
+                      print('C CERROOO');
+                    }
+                    googleSignIn.signIn().then((value) async {
+                      String userName = value!.displayName!;
+                      String profilePicture = value.photoUrl!;
+                      String email = value.email;
+                      var data = [
+                        userName,
+                        profilePicture,
+                        email,
+                      ];
+                      print('DATA -> $data');
+                      if (data.isEmpty) {
+                        print('NO DATA AAAAAAAAAAA');
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return WelcomeScreen(
+                                data: data,
+                                googleSignIn: googleSignIn,
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    });
+                  }),
               const SizedBox(width: defaultPadding / 2),
               SocialLoginButton(
-                buttonType: SocialLoginButtonType.github,
-                mode: SocialLoginButtonMode.single,
-                borderRadius: 30,
-                onPressed: () {
-                  signInWithGitHub(context).whenComplete(() {
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return WelcomeScreen();
-                    //     },
-                    //   ),
-                    // );
-                  });
-                }
-              ),
+                  buttonType: SocialLoginButtonType.github,
+                  mode: SocialLoginButtonMode.single,
+                  borderRadius: 30,
+                  onPressed: () async {
+                    githubSignIn.signIn(context).then((value) async {
+                      print('VAL -> ${value.token}');
+                      print('ST -> ${value.status}');
+                      FirebaseAuth.instance.signInWithCredential(
+                          GithubAuthProvider.credential(value.token!));
+                      User? userGithub = FirebaseAuth.instance.currentUser;
+                      print('USR GITHUB -> $userGithub');
+                      //print('email GITHUB -> ${userGithub!.providerData[0].email}');
+                    });
+                    // signInWithGitHub(context).whenComplete(() {
+                    //   Navigator.of(context).push(
+                    //     MaterialPageRoute(
+                    //       builder: (context) {
+                    //         return WelcomeScreen();
+                    //       },
+                    //     ),
+                    //   );
+                    // });
+                  }),
               const SizedBox(width: defaultPadding / 2),
             ],
           ),

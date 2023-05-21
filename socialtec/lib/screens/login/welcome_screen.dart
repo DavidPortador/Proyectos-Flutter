@@ -1,40 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:socialtec/auth_social/auth_google.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key, required this.data, this.googleSignIn});
+
+  final List<String> data;
+  final GoogleSignIn? googleSignIn;
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_typing_uninitialized_variables
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Example'),
+        title: const Text('Profile '),
       ),
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              // FlutterLogo(size: 100),
-              CircleAvatar(
-                backgroundImage: NetworkImage(imageUrl!),
-                radius: 40,
-                backgroundColor: Colors.transparent,
-              ),
-              SizedBox(height: 20),
-              Text(name!),
-              SizedBox(height: 20),
-              Text(email!),
-              SizedBox(height: 20),
-              ElevatedButton.icon(
-                onPressed: () {
-                  signOutGoogle();
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.exit_to_app),
-                label: Text('Sign Out')
-              ),
-            ],
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            CircleAvatar(
+              backgroundImage: NetworkImage(widget.data[1]),
+              radius: 40,
+              backgroundColor: Colors.transparent,
+            ),
+            const SizedBox(height: 20),
+            Text(widget.data[0]),
+            const SizedBox(height: 20),
+            Text(widget.data[2]),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () async {
+                if (widget.googleSignIn != null) {
+                  if (await widget.googleSignIn!.isSignedIn()) {
+                    widget.googleSignIn!.signOut();
+                    print('CERRADAAA');
+                  }
+                }
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.exit_to_app),
+              label: const Text('Sign Out')),
+          ],
         ),
       ),
     );
