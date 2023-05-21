@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:github_sign_in/github_sign_in.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
+import 'package:socialtec/screens/dashboard/dashboard_screen.dart';
 import 'package:socialtec/screens/login/components/footer_account_acheck.dart';
-import 'package:socialtec/screens/login/welcome_screen.dart';
 import 'package:socialtec/settings/theme_config.dart';
 
 class LoginForm extends StatefulWidget {
@@ -119,7 +119,22 @@ class _LoginFormState extends State<LoginForm> {
                       context, 'Empty field', 'Complete Password field');
                 } else {
                   if (isEmail(em)) {
-                    Navigator.pushNamed(context, '/dashboard');
+                    var data = [
+                      'Default profile',
+                      'https://i.pinimg.com/474x/30/04/21/3004214c3132a490eefad066c6da759b.jpg',
+                      em,
+                      'Default'
+                    ];
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return DashboardScreen(
+                            data: data,
+                          );
+                        },
+                      ),
+                    );
+                    
                   } else {
                     showAlertDialog(
                         context, 'Incorrect email', 'Incorrect Email format');
@@ -153,24 +168,22 @@ class _LoginFormState extends State<LoginForm> {
                       print('C CERROOO');
                     }
                     googleSignIn.signIn().then((value) async {
-                      String userName = value!.displayName!;
-                      String profilePicture = value.photoUrl!;
-                      String email = value.email;
                       var data = [
-                        userName,
-                        profilePicture,
-                        email,
+                        value!.displayName!,
+                        value.photoUrl!,
+                        value.email,
+                        'Google'
                       ];
                       print('DATA -> $data');
+                      googleSignIn.signOut();
                       if (data.isEmpty) {
                         print('NO DATA AAAAAAAAAAA');
                       } else {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) {
-                              return WelcomeScreen(
+                              return DashboardScreen(
                                 data: data,
-                                googleSignIn: googleSignIn,
                               );
                             },
                           ),
@@ -192,16 +205,28 @@ class _LoginFormState extends State<LoginForm> {
                       User? userGithub = FirebaseAuth.instance.currentUser;
                       print('USR GITHUB -> $userGithub');
                       //print('email GITHUB -> ${userGithub!.providerData[0].email}');
+                      var data = [
+                        userGithub!.providerData[0].displayName,
+                        userGithub.providerData[0].photoURL,
+                        userGithub.providerData[0].email,
+                        'GitHub'
+                      ];
+                      print('DATA -> $data');
+                      FirebaseAuth.instance.signOut();
+                      if (data.isEmpty) {
+                        print('NO DATA AAAAAAAAAAA');
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return DashboardScreen(
+                                data: data,
+                              );
+                            },
+                          ),
+                        );
+                      }
                     });
-                    // signInWithGitHub(context).whenComplete(() {
-                    //   Navigator.of(context).push(
-                    //     MaterialPageRoute(
-                    //       builder: (context) {
-                    //         return WelcomeScreen();
-                    //       },
-                    //     ),
-                    //   );
-                    // });
                   }),
               const SizedBox(width: defaultPadding / 2),
             ],

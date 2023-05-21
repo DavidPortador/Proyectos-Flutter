@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key, required this.data, this.googleSignIn});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key, required this.data});
 
-  final List<String> data;
-  final GoogleSignIn? googleSignIn;
+  final List<String?> data;
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
@@ -23,7 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile '),
+        title: Text('Profile ${widget.data[3]}'),
       ),
       body: Center(
         child: Column(
@@ -31,23 +29,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             CircleAvatar(
-              backgroundImage: NetworkImage(widget.data[1]),
+              backgroundImage: NetworkImage(widget.data[1]!),
               radius: 40,
               backgroundColor: Colors.transparent,
             ),
             const SizedBox(height: 20),
-            Text(widget.data[0]),
+            Text(widget.data[0]!),
             const SizedBox(height: 20),
-            Text(widget.data[2]),
+            Text(widget.data[2]!),
             const SizedBox(height: 20),
             ElevatedButton.icon(
-              onPressed: () async {
-                if (widget.googleSignIn != null) {
-                  if (await widget.googleSignIn!.isSignedIn()) {
-                    widget.googleSignIn!.signOut();
-                    print('CERRADAAA');
-                  }
-                }
+              onPressed: () {
+                Navigator.pop(context);
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.exit_to_app),

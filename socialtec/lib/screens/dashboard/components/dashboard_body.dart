@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:socialtec/screens/profile/profile_screen.dart';
 
-class DashboardBody extends StatelessWidget {
-  const DashboardBody({
-    Key? key,
-  }) : super(key: key);
+class DashboardBody extends StatefulWidget {
+  const DashboardBody({super.key, required this.data});
+
+  final List<String?> data;
+
+  @override
+  State<DashboardBody> createState() => _DashboardBodyState();
+}
+
+class _DashboardBodyState extends State<DashboardBody> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,19 +23,19 @@ class DashboardBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ElevatedButton.icon(
-            icon: Icon(Icons.brightness_6_rounded),
+            icon: const Icon(Icons.brightness_6_rounded),
             onPressed: () {
               Navigator.pushNamed(context, '/theme');
             },
-            label: Text("Themes"),
+            label: const Text("Themes"),
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
-            icon: Icon(Icons.post_add_rounded),
+            icon: const Icon(Icons.post_add_rounded),
             onPressed: () {
               Navigator.pushNamed(context, '/post');
             },
-            label: Text("Posts"),
+            label: const Text("Posts"),
             style: ElevatedButton.styleFrom(
               primary: Colors.green,
               //onPrimary: Colors.black,
@@ -32,11 +43,11 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
-            icon: Icon(Icons.edit_calendar_outlined),
+            icon: const Icon(Icons.edit_calendar_outlined),
             onPressed: () {
               Navigator.pushNamed(context, '/events');
             },
-            label: Text("Events"),
+            label: const Text("Events"),
             style: ElevatedButton.styleFrom(
               primary: Colors.orange,
               //onPrimary: Colors.black,
@@ -44,11 +55,11 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
-            icon: Icon(Icons.http_rounded),
+            icon: const Icon(Icons.http_rounded),
             onPressed: () {
               Navigator.pushNamed(context, '/popular');
             },
-            label: Text("Movies"),
+            label: const Text("Movies"),
             style: ElevatedButton.styleFrom(
               primary: Colors.purple,
               //onPrimary: Colors.black,
@@ -56,23 +67,43 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
-            icon: Icon(Icons.cloud_circle_outlined),
+            icon: const Icon(Icons.cloud_circle_outlined),
             onPressed: () {
               Navigator.pushNamed(context, '/nasa');
             },
-            label: Text("Nasa"),
+            label: const Text("Nasa"),
             style: ElevatedButton.styleFrom(
-              primary: Color.fromARGB(255, 5, 132, 149),
+              primary: const Color.fromARGB(255, 5, 132, 149),
               //onPrimary: Colors.black,
             ),
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.supervised_user_circle_sharp),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ProfileScreen(
+                      data: widget.data,
+                    );
+                  },
+                ),
+              );
+            },
+            label: const Text("Profile"),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.grey,
+              //onPrimary: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.logout),
             onPressed: () {
               Navigator.pop(context);
             },
-            label: Text("Logout"),
+            label: const Text("Sign Out"),
             style: ElevatedButton.styleFrom(
               primary: Colors.redAccent,
               //onPrimary: Colors.black,

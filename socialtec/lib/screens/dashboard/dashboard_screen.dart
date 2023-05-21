@@ -5,8 +5,23 @@ import 'package:socialtec/components/background.dart';
 import 'components/dashboard_body.dart';
 import 'components/dashboard_top.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+ List<String?> session = List.empty();
+
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key, required this.data});
+
+  final List<String?> data;
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    session = widget.data;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,28 +30,22 @@ class DashboardScreen extends StatelessWidget {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text('Bob Cholo'),
-              accountEmail: Text('bob_cholo@gmail.com'),
-              currentAccountPicture: Image(
-                image: AssetImage('assets/customs/bob_cholo.png')
+              accountName: Text(widget.data[0]!),
+              accountEmail: Text(widget.data[2]!),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(widget.data[1]!),
+                radius: 40,
+                backgroundColor: Colors.transparent,
               ),
             ),
             ListTile(
-              title: Text('Themes'),
-              subtitle: Text('Change your theme here'),
-              leading: Icon(Icons.brightness_6_rounded),
-              trailing: Icon(Icons.chevron_right),
+              title: const Text('Sign Out'),
+              subtitle: Text('${widget.data[3]} User'),
+              leading: const Icon(Icons.logout),
               onTap: () {
-                
-              },
-            ),
-            ListTile(
-              title: Text('Titulo 2'),
-              subtitle: Text('subtitulo 2'),
-              leading: Icon(Icons.settings),
-              trailing: Icon(Icons.chevron_right),
-              onTap: () {
-                
+                // XDDDDDDDDDDDDD
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
             ),
           ],
@@ -65,18 +74,18 @@ class MobileDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        DashboardTop(),
+        const DashboardTop(),
         Row(
           children: [
-            Spacer(),
+            const Spacer(),
             Expanded(
               flex: 8,
-              child: DashboardBody(),
+              child: DashboardBody(data: session),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ],
@@ -89,10 +98,10 @@ class DesktopDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(
+        const Expanded(
           child: DashboardTop(),
         ),
         Expanded(
@@ -101,7 +110,7 @@ class DesktopDashboardScreen extends StatelessWidget {
             children: [
               SizedBox(
                 width: 450,
-                child: DashboardBody(),
+                child: DashboardBody(data: session),
               ),
             ],
           ),

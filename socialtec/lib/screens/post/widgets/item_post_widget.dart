@@ -5,9 +5,8 @@ import 'package:socialtec/models/post_model.dart';
 class ItemPostWidget extends StatelessWidget {
   ItemPostWidget({super.key, this.objPostModel});
 
-  PostModel? objPostModel;
-
-  DatabaseHelper database = DatabaseHelper();
+  final PostModel? objPostModel;
+  final DatabaseHelper database = DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {

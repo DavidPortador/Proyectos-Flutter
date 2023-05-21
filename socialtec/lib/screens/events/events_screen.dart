@@ -533,7 +533,6 @@ class MeetingDataSource extends CalendarDataSource {
     return _getMeetingData(index).background;
   }
 
-  @override
   bool isCompleted(int index) {
     return _getMeetingData(index).isCompleted;
   }
