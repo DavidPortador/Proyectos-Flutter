@@ -134,7 +134,6 @@ class _LoginFormState extends State<LoginForm> {
                         },
                       ),
                     );
-                    
                   } else {
                     showAlertDialog(
                         context, 'Incorrect email', 'Incorrect Email format');
@@ -157,6 +156,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: defaultPadding / 2),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SocialLoginButton(
                   buttonType: SocialLoginButtonType.google,

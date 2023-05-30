@@ -28,6 +28,7 @@ class DefaultFirebaseOptions {
     appId: '1:65390635798:android:0afb502fff36338c367e37',
     messagingSenderId: '65390635798',
     projectId: 'socialtec-f33c3',
+    authDomain: "https://look-back-90825.firebaseapp.com/__/auth/handler",
     //storageBucket: 'gs://look-back-90825.appspot.com',
   );
 

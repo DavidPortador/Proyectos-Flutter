@@ -47,11 +47,25 @@ class _ListPopularState extends State<ListPopular> {
           future: apiPopular!.getAllPopular(),
           builder: (context, AsyncSnapshot<List<PopularModel>?> snapshot) {
             if (snapshot.hasData) {
+              final Size size = MediaQuery.of(context).size;
+              double radio = .46;
+              double x = 10;
+              double y = 10;
+              int count = 2;
+              if (size.width > 992) {
+                radio = .9;
+                count = 4;
+                x = 100;
+              } else {
+                radio = .46;
+                count = 2;
+                x = 10;             
+              }
               return GridView.builder(
-                padding: const EdgeInsets.all(10),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: .9,
+                padding: EdgeInsets.fromLTRB(x,y,x,y),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: count,
+                    childAspectRatio: radio, // es el height :u
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10),
                 itemCount: snapshot.data != null ? snapshot.data!.length : 0,

@@ -31,11 +31,25 @@ class _ListNasaState extends State<ListNasa> {
           future: apiNasa!.getAll(widget.tipo),
           builder: (context, AsyncSnapshot<List<NasaModel>?> snapshot) {
             if (snapshot.hasData) {
+              final Size size = MediaQuery.of(context).size;
+              double radio = .46;
+              double x = 10;
+              double y = 10;
+              int count = 2;
+              if (size.width > 992) {
+                radio = .9;
+                count = 4;
+                x = 100;
+              } else {
+                radio = .46;
+                count = 2;
+                x = 10;             
+              }
               return GridView.builder(
-                padding: const EdgeInsets.all(10),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: .46, // es el height :u
+                padding: EdgeInsets.fromLTRB(x,y,x,y),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: count,
+                  childAspectRatio: radio, // es el height :u
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
@@ -102,9 +116,9 @@ class _ListNasaState extends State<ListNasa> {
                               double scale;
                               if (widget.tipo == "aerosol") {
                                 scale = 0.15;
-                              }else if (widget.tipo == "cloud") {
+                              } else if (widget.tipo == "cloud") {
                                 scale = 0.75;
-                              }else{
+                              } else {
                                 scale = 0.2;
                               }
                               Navigator.push(

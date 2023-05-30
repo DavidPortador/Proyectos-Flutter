@@ -87,8 +87,8 @@ class _EventsScreenState extends State<EventsScreen> {
             ),
           );
         } else if (snapshot.hasError) {
-          return const Center(
-            child: Text('Ocurrio un error :)'),
+          return const Scaffold(
+            body: Center(child: Text('SQFLite isn\'t supprt for Web')),
           );
         } else {
           return const Center(
