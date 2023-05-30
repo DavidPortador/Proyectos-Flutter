@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:socialtec/settings/firebase_options.dart';
 import 'package:socialtec/settings/theme_config.dart';
 import 'package:socialtec/settings/model_theme.dart';
 import 'package:socialtec/settings/routes.dart';
@@ -7,7 +8,10 @@ import 'package:firebase_core/firebase_core.dart';
  
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    name: 'socialtec',
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

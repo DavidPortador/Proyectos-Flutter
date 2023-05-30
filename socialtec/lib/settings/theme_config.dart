@@ -73,7 +73,7 @@ const purpleBackgroundColor = Color.fromARGB(255, 231, 198, 255);
 );*/
 
 ThemeData lightTheme = ThemeData.light().copyWith(
-  textSelectionTheme: TextSelectionThemeData(
+  textSelectionTheme: const TextSelectionThemeData(
     cursorColor: lightPrimaryColor
   ),
   primaryColor: lightPrimaryColor,
@@ -99,7 +99,7 @@ ThemeData lightTheme = ThemeData.light().copyWith(
       borderSide: BorderSide(width: 5, color: lightPrimaryColor),
     ),
   ),
-  primaryTextTheme: TextTheme(
+  primaryTextTheme: const TextTheme(
     displayLarge: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold, color: Colors.white70),
     titleLarge: TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic, color: Colors.white70),
     bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.white70),
@@ -108,7 +108,7 @@ ThemeData lightTheme = ThemeData.light().copyWith(
 );
 
 ThemeData darkTheme = ThemeData.dark().copyWith(
-  textSelectionTheme: TextSelectionThemeData(
+  textSelectionTheme: const TextSelectionThemeData(
     cursorColor: darkPrimaryColor
   ),
   primaryColor: darkPrimaryColor,
@@ -134,7 +134,7 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
       borderSide: BorderSide(width: 5, color: darkPrimaryColor),
     ),
   ),
-  primaryTextTheme: TextTheme(
+  primaryTextTheme: const TextTheme(
     displayLarge: TextStyle(
         fontSize: 36.0, fontWeight: FontWeight.bold, color: Colors.black87),
     titleLarge: TextStyle(

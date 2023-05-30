@@ -32,6 +32,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder(
       future: database!.GETALLEVENTS(),
       builder: (context, AsyncSnapshot<List<EventModel>> snapshot) {
@@ -44,17 +45,13 @@ class _EventsScreenState extends State<EventsScreen> {
             var da = objEventModel.dateEvent;
             var aux = objEventModel.comp;
             bool comp;
-
             aux == 1 ? comp = true : comp = false;
-
             DateTime day = DateFormat("yyyy-MM-dd").parse(da!);
             DateTime now =
                 DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
             Color color = getColor(day, now, comp);
-
             meetings.add(Meeting(desc!, day, day, color, comp));
           }
-
           return Scaffold(
             appBar: AppBar(
               title: const Text(
@@ -137,7 +134,10 @@ class _EventsScreenState extends State<EventsScreen> {
                     onChanged: (value) {},
                     controller: desc,
                     decoration:
-                        const InputDecoration(hintText: "Description: "),
+                        const InputDecoration(
+                          hintText: "Description: ",
+                          fillColor: Colors.transparent,
+                        ),
                   ),
                   Row(
                     children: [

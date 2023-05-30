@@ -50,6 +50,8 @@ class _DetailMovilScreenState extends State<DetailMovilScreen> {
                       print('favorito borrado');
                     });
                     Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/popular');
                   });
                 } else {
                   setState(() {
@@ -58,6 +60,8 @@ class _DetailMovilScreenState extends State<DetailMovilScreen> {
                       print('favorito insertado');
                     });
                     Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/popular');
                   });
                 }
               },

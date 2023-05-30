@@ -73,7 +73,7 @@ class _ListPopularState extends State<ListPopular> {
                           );
                         } else {
                           return const Center(
-                            child: Text('Ocurrio un error :('),
+                            child: Center(child: CircularProgressIndicator()),
                           );
                         }
                       });

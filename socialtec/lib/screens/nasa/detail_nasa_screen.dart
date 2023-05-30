@@ -213,7 +213,7 @@ class _DetailNasaScreenState extends State<DetailNasaScreen> {
           child: Slider(
             value: value.position.dx,
             min: -1000.0,
-            max: 1000.0,
+            max: 100000.0,
             onChanged: (double newPosition) {
               controller.position = Offset(newPosition, controller.position.dy);
             },
