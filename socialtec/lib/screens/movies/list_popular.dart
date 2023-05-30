@@ -48,16 +48,14 @@ class _ListPopularState extends State<ListPopular> {
           builder: (context, AsyncSnapshot<List<PopularModel>?> snapshot) {
             if (snapshot.hasData) {
               final Size size = MediaQuery.of(context).size;
-              double radio = .46;
+              double radio = .9;
               double x = 10;
               double y = 10;
               int count = 2;
               if (size.width > 992) {
-                radio = .9;
                 count = 4;
                 x = 100;
               } else {
-                radio = .46;
                 count = 2;
                 x = 10;             
               }
